@@ -1,555 +1,1010 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Shopify Compliance & Growth — Advisor Dashboard</title>
-
- <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://cdn.shopify.com/assets/images/logos/shopify-bag.png" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shopify Merchant Support — Advisor Dashboard</title>
   
-<!-- Tailwind (utility helpers) + Font Awesome -->
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --green:#5b843c;
-  --teal:#004c3f;
-  --muted:#6b7280;
-  --border:#48604e;
-  --bg:#f4f6f8;
-  --telegram:#0088cc;
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   
-  /* Shopify/Wix Brand Colors */
-  --shopify-green: #00A651;
-  --shopify-purple: #6C5CE7;
-  --shopify-navy: #202C5C;
-  --shopify-light: #F8F9FA;
-  --wix-blue: #0073E6;
-  --text-primary: #1A1A1A;
-  --text-secondary: #8B9299;
-  --surface: #FFFFFF;
-}
+  <!-- Premium Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-/* Shopify/Wix Base Styling */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <style> 
+    /* ========================================
+       CSS VARIABLES
+       ======================================== */
+    :root{
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --secondary: #06B6D4;
+      --accent: #10B981;
+      --gold: #F59E0B;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --text-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--shopify-light);
-  color: var(--text-primary);
-  line-height: 1.5;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    .font-modern { font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .font-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
 
-.focus-ring:focus{
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.15);
-  border-color: var(--shopify-green);
-}
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
 
-/* Shopify-style Cards */
-.card {
-  background: var(--surface);
-  border: 1px solid #E1E5E9;
-  border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02);
-  transition: all 0.2s ease;
-}
+    /* ========================================
+       TEXT GRADIENTS
+       ======================================== */
+    .text-gradient {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .text-gradient-emerald {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-.card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.04);
-  transform: translateY(-2px);
-}
+    /* ========================================
+       CARD STYLES
+       ======================================== */
+    .premium-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 2px 16px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
 
-/* Shopify-style Typography */
-h1, h2, h3, h4 {
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
+    .premium-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .premium-hover:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
 
-.shopify-heading {
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--shopify-green) 0%, var(--shopify-purple) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+    /* ========================================
+       HEADINGS
+       ======================================== */
+    .premium-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    
+    .premium-heading-xl {
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .premium-heading-lg {
+      font-size: 2.5rem;
+      color: #1f2937;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .premium-heading-md {
+      font-size: 1.875rem;
+      color: #374151;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+    }
 
-/* Shopify-style Buttons */
-.btn-shopify {
-  background: var(--shopify-green);
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  transition: all 0.15s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+    /* ========================================
+       BODY TEXT
+       ======================================== */
+    .premium-text {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      color: #4b5563;
+      font-weight: 400;
+    }
+    
+    .premium-text-lg {
+      font-size: 1.125rem;
+      line-height: 1.8;
+    }
+    
+    .premium-text-lead {
+      font-size: 1.25rem;
+      line-height: 1.75;
+      color: #374151;
+      font-weight: 500;
+    }
 
-.btn-shopify:hover {
-  background: #00954A;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 166, 81, 0.25);
-}
+    /* ========================================
+       ANIMATIONS
+       ======================================== */
+    .fade-in { 
+      animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; 
+    }
+    
+    @keyframes fadeIn { 
+      from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95);
+      } 
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+      } 
+    }
+    
+    .slide-up { 
+      animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; 
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(40px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0);
+      }
+    }
 
-.btn-shopify:active {
-  transform: translateY(0);
-}
+    /* ========================================
+       VERIFICATION & STATUS
+       ======================================== */
+    .verification-tick {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%);
+      border-radius: 50%;
+      margin-left: 8px;
+      animation: verifyPulse 3s ease-in-out infinite;
+      box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+    }
+    
+    @keyframes verifyPulse {
+      0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+      }
+      50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 4px 16px rgba(29, 161, 242, 0.5);
+      }
+    }
 
-/* Wix-style Modern Buttons */
-.btn-wix {
-  background: var(--wix-blue);
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
+    .online-status {
+      position: fixed;
+      top: 80px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      animation: statusSlide 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes statusSlide {
+      from { 
+        opacity: 0; 
+        transform: translate(-50%, -30px);
+      }
+      to { 
+        opacity: 1; 
+        transform: translate(-50%, 0);
+      }
+    }
 
-.btn-wix::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
+    .online-dot {
+      width: 10px; height: 10px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      border-radius: 50%;
+      animation: onlinePulse 2s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+    }
+    
+    @keyframes onlinePulse {
+      0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.7;
+        transform: scale(1.1);
+      }
+    }
 
-.btn-wix:hover::before {
-  width: 300px;
-  height: 300px;
-}
+    /* ========================================
+       AI SUPPORT BOT
+       ======================================== */
+    .ai-support-bot {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
 
-.btn-wix:hover {
-  background: #005BB5;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 115, 230, 0.3);
-}
+    .bot-main-button {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #00A651 0%, #00A651 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        0 8px 32px rgba(79, 70, 229, 0.4),
+        0 4px 16px rgba(79, 70, 229, 0.3);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: botFloat 4s ease-in-out infinite;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
 
-/* Shopify-style Progress Steps */
-.step-dot{
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #D1D5DB;
-  background: var(--surface);
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
+    .bot-main-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(135deg, #10B981 0%, #5b9e29 100%);
+      border-radius: 50%;
+      border: 2px solid white;
+      animation: onlineIndicator 2s ease-in-out infinite;
+    }
 
-.step-dot.active{
-  background: var(--shopify-green);
-  color: white;
-  border-color: var(--shopify-green);
-  box-shadow: 0 0 0 4px rgba(0, 166, 81, 0.1);
-}
+    @keyframes onlineIndicator {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
 
-.step-line{
-  height: 2px;
-  background: #E5E7EB;
-  flex: 1;
-  transition: all 0.3s ease;
-}
+    .bot-main-button:hover {
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 
+        0 12px 40px rgba(79, 70, 229, 0.6),
+        0 6px 20px rgba(79, 70, 229, 0.4);
+    }
 
-.step-line.active{
-  background: var(--shopify-green);
-}
+    @keyframes botFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
 
-/* Shopify-style Status Indicator */
-.status-shopify {
-  background: #F0FDF4;
-  border: 1px solid #BBF7D0;
-  color: #15803D;
-  font-weight: 600;
-  position: relative;
-}
+    .bot-panel {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-.status-shopify::before {
-  content: '';
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background: #22C55E;
-  border-radius: 50%;
-  animation: pulse-green 2s ease-in-out infinite;
-}
+    .bot-panel.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
 
-@keyframes pulse-green {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
+    .bot-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
 
-/* Shopify-style Service Cards */
-.service-shopify {
-  background: var(--surface);
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  padding: 24px;
-  transition: all 0.2s ease;
-  position: relative;
-}
+    .bot-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      position: relative;
+    }
 
-.service-shopify:hover {
-  border-color: var(--shopify-green);
-  box-shadow: 0 4px 16px rgba(0, 166, 81, 0.08);
-  transform: translateY(-1px);
-}
+    .bot-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      background: #10B981;
+      border: 2px solid white;
+      border-radius: 50%;
+    }
 
-.service-icon-shopify {
-  color: var(--shopify-green);
-  background: rgba(0, 166, 81, 0.1);
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-}
+    .bot-info h4 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1F2937;
+    }
 
-/* Wix-style Success Cards */
-.success-wix {
-  background: var(--surface);
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.25s ease;
-}
+    .bot-info p {
+      margin: 0;
+      font-size: 12px;
+      color: #6B7280;
+    }
+    
+    .support-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-.success-wix:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  transform: translateY(-4px);
-}
+    .support-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
 
-.success-metric {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--shopify-green);
-  margin-bottom: 8px;
-}
+    .support-option:hover {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      transform: translateX(2px);
+    }
 
-/* Shopify-style Ticker */
-.ticker-wrapper {
-  overflow: hidden;
-  white-space: nowrap;
-  background: linear-gradient(135deg, #F0FDF4 0%, #ECFDF5 100%);
-  border: 1px solid #BBF7D0;
-  border-radius: 12px;
-  padding: 16px 0;
-}
+    .support-option.whatsapp:hover { border-color: #25D366; }
+    .support-option.telegram:hover { border-color: #0088CC; }
+    .support-option.email:hover { border-color: #374151; }
 
-.ticker {
-  display: inline-block;
-  padding-left: 100%;
-  animation: ticker 25s linear infinite;
-  font-weight: 600;
-  color: var(--shopify-green);
-  font-size: 16px;
-}
-@keyframes ticker { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
+    .option-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: white;
+    }
 
-/* Wix-style Modal */
-.modal-wix {
-  background: rgba(26, 26, 26, 0.6);
-  backdrop-filter: blur(8px);
-}
+    .option-icon.whatsapp { background: linear-gradient(135deg, #25D366 0%, #1ebe57 100%); }
+    .option-icon.telegram { background: linear-gradient(135deg, #0088CC 0%, #0077B5 100%); }
+    .option-icon.email { background: linear-gradient(135deg, #374151 0%, #1F2937 100%); }
 
-.modal-content-wix {
-  background: var(--surface);
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  border: 1px solid #E5E7EB;
-}
+    .option-text h5 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1F2937;
+    }
 
-/* Shopify-style Inputs */
-.input-shopify {
-  border: 1.5px solid #D1D5DB;
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.15s ease;
-  background: var(--surface);
-}
+    .option-text p {
+      margin: 0;
+      font-size: 11px;
+      color: #6B7280;
+    }
 
-.input-shopify:focus {
-  border-color: var(--shopify-green);
-  box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.1);
-}
+    /* ========================================
+       SUCCESS STORIES
+       ======================================== */
+    .success-wix {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .success-wix:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .success-metric {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
 
-/* Professional Profile Styling */
-.profile-professional {
-  position: relative;
-  border: 3px solid var(--shopify-green);
-  border-radius: 50%;
-  padding: 3px;
-  background: var(--surface);
-}
+    /* ========================================
+       BUTTONS
+       ======================================== */
+    .premium-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600;
+      letter-spacing: 0.025em;
+    }
+    
+    .premium-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .premium-btn:hover::before {
+      left: 100%;
+    }
 
-/* Shopify-style Loading */
-.loading-shopify {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #E5E7EB;
-  border-top: 4px solid var(--shopify-green);
-  border-radius: 50%;
-  animation: spin-shopify 1s linear infinite;
-}
+    /* ========================================
+       MODALS
+       ======================================== */
+    .support-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
 
-@keyframes spin-shopify {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+    .support-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-/* Responsive Design */
-@media(max-width:640px){
-  .card { padding: 20px !important; }
-  #dashboard { padding: 16px !important; }
-  .grid { gap: 16px !important; }
-  .steps-scroll { overflow-x:auto; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
-  .steps-scroll::-webkit-scrollbar { display:none; }
-  h1 { font-size: 28px; }
-  h2 { font-size: 24px; }
-  h3 { font-size: 20px; }
-}
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      margin: 20px;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
 
-@media(min-width:1024px){ 
-  #dashboard{
-    padding: 40px 48px !important;
-    max-width: 1200px;
-  }
+    .support-modal.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
 
-  .card{
-    padding: 32px !important;
-  }
+    /* ========================================
+       TICKER & SLIDESHOW
+       ======================================== */
+    .ticker-section {
+      max-width: 1200px;
+      margin: 40px auto;
+      text-align: center;
+      font-family: "Inter", Arial, sans-serif;
+    }
 
-  .grid{
-    gap: 32px !important;
-  }
+    .ticker-wrapper {
+      overflow: hidden;
+      background: linear-gradient(90deg, #111, #333);
+      color: #fff;
+      white-space: nowrap;
+      border-radius: 40px;
+      padding: 14px 0;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
 
-  .services-grid{
-    grid-template-columns: repeat(4,minmax(0,1fr));
-  }
+    .ticker {
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker 25s linear infinite;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
 
-  .stories-grid{
-    grid-template-columns: repeat(3,minmax(0,1fr));
-  }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
 
-  section.max-w-5xl > div{
-    height:100%;
-  }
-}
+    .fade-images {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      height: 500px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
 
-/* Animations */
-.animate-fade-in { 
-  animation: fadeIn 0.4s ease-out; 
-}
+    .image-slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      transition: opacity 1.8s ease-in-out, transform 6s ease;
+    }
 
-@keyframes fadeIn { 
-  from{
-    opacity:0; 
-    transform:translateY(16px);
-  } 
-  to{
-    opacity:1; 
-    transform:translateY(0);
-  } 
-}
+    .image-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.1);
+    }
 
-.hidden { display: none !important; }
+    .image-slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
 
-/* Floating Widget Shopify Style */
-.widget-shopify {
-  background: var(--surface);
-  border: 1px solid #E1E5E9;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-}
+    .image-slide.active img {
+      transform: scale(1);
+    }
 
-.widget-header-shopify {
-  background: linear-gradient(135deg, var(--shopify-green) 0%, #00954A 100%);
-  padding: 20px;
-}
+    .caption {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      z-index: 4;
+    }
 
-/* FAB Shopify Style */
-.fab-shopify {
-  background: var(--shopify-green);
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  box-shadow: 0 4px 16px rgba(0, 166, 81, 0.3);
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
+    .image-slide.active .caption {
+      opacity: 1;
+    }
 
-.fab-shopify:hover {
-  background: #00954A;
-  transform: scale(1.1);
-  box-shadow: 0 8px 24px rgba(0, 166, 81, 0.4);
-}
+    .fade-images::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+      z-index: 3;
+      pointer-events: none;
+      border-radius: 20px;
+    }
+    
+  </style>
 
-/* Clean List Styling */
-.list-clean {
-  list-style: none;
-  padding: 0;
-}
-
-.list-clean li {
-  padding: 8px 0;
-  border-bottom: 1px solid #F3F4F6;
-  font-weight: 500;
-}
-
-.list-clean li:last-child {
-  border-bottom: none;
-}
-</style>
+  <link id="faviconLink" rel="icon" href="">
 </head>
-<body>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 text-gray-900 antialiased">
 
-<!-- Loading -->
+<!-- ========================================
+     CONFIGURATION SCRIPT
+     ======================================== -->
+<script>
+  const CONFIG = {
+    logoUrl: "https://i.pinimg.com/736x/3a/9d/91/3a9d9115f2936dbd8979e34381da7973.jpg",
+    whatsappNumber: "2349135251130",
+    telegramUsername: "merchanthelpsupport",
+    supportEmail: "juan.manuel.shopifyexpert@gmail.com",
+    
+    developer: {
+      name: "Juan Manuel",
+      title: "Compliance & Merchant Support Advisor",
+      partnerBadge: "Independent Partner Resource",
+      staffId: "ADV-342991",
+      caseId: "CS-114882",
+      years: "5+ years",
+      storesBuilt: 76,
+      rating: 4.9,
+      photoUrl: "https://i.pinimg.com/736x/2f/53/58/2f535867ec2ea063d07e3c4148d18cf8.jpg"
+    },
+    
+    ticketId: "MD57-097",
+    loadingDuration: 2000
+  };
+</script>
+
+<!-- ========================================
+     LOADING SCREEN
+     ======================================== -->
 <section id="loading" class="min-h-screen flex items-center justify-center" style="background: linear-gradient(135deg, #2a2e57 0%, #2f6164 100%);">
   <div class="max-w-xl w-full p-6 text-center">
     <img src="https://cdn.shopify.com/assets/images/logos/shopify-bag.png" class="mx-auto h-14 mb-4" alt="Shopify"/>
     <h1 class="text-2xl font-semibold text-white">Connecting you with a Specialist</h1>
-<p class="mt-2" style="color: rgba(255, 255, 255, 0.6);">Preparing your secure session — this takes a moment.</p>
+    <p class="mt-2" style="color: rgba(255, 255, 255, 0.6);">Preparing your secure session — this takes a moment.</p>
 
     <div class="relative mx-auto mt-8 w-28 h-28">
       <div class="w-28 h-28 rounded-full border-4 border-gray-200"></div>
-      <div class="absolute inset-0 rounded-full border-4 border-[var(--green)] border-t-transparent animate-spin"></div>
+      <div class="absolute inset-0 rounded-full border-4 border-[#5b843c] border-t-transparent animate-spin"></div>
       <div id="pct" class="absolute inset-0 flex items-center justify-center font-medium text-white">0%</div>
+    </div>
   </div>
 </section>
 
-<!-- Dashboard -->
-<main id="dashboard" class="hidden max-w-7xl mx-auto py-8 px-6 space-y-8 bg-shopify-light min-h-screen">
-  
-  <!-- Shopify-style Header -->
-  <header class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<!-- ========================================
+     ONLINE STATUS
+     ======================================== -->
+<div id="onlineStatus" class="online-status hidden">
+  <div class="bg-white/95 backdrop-blur-sm border border-gray-200 rounded-full px-5 py-3 shadow-xl flex items-center gap-3">
+    <div class="online-dot"></div>
+    <span class="text-sm font-semibold text-gray-700">Connected</span>
+  </div>
+</div>
+
+<main id="main" class="hidden min-h-screen pb-12">
+   <!-- ========================================
+       HEADER
+       ======================================== -->
+  <header class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-200/50 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <img src="https://cdn.shopify.com/assets/images/logos/shopify-bag.png" alt="Shopify" class="h-10"/>
+        <img id="logoTop" alt="Logo" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-200 shadow-md" src="" />
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">Shopify Advisor And Growth Specialist</h1>
-          <p class="text-sm text-gray-600 font-medium">Helping shopify merchants grow safely & profitably</p>
+          <div class="text-base font-bold text-gradient">Shopify Advisor</div>
+          <div class="text-xs text-gray-500 font-medium">Helping merchants grow safely & profitably</div>
         </div>
+<!-- ✨ PREMIUM GOLD SEASONAL BANNER -->
+<div id="seasonal-banner">
+  <div class="seasonal-left">
+    <img 
+      src="https://cdn-icons-png.flaticon.com/512/10379/10379747.png" 
+      alt="holiday" 
+      class="seasonal-icon"
+    />
+    <span class="seasonal-text">
+      Holiday Upgrade Package — Limited Season
+    </span>
+  </div>
+
+  <button class="seasonal-cta" id="seasonal-cta-btn">
+    View Offer →
+  </button>
+
+  <button id="seasonal-close" aria-label="Close">×</button>
+
+  <div class="snow"></div>
+</div>
+
+
+<style>
+  /* === Container === */
+  #seasonal-banner {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #ffffffee;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: #111;
+    padding: 14px 24px;
+    z-index: 9999;
+    border-bottom: 1px solid rgba(180,140,30,0.25);
+    display: none; /* will switch to flex when shown */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    animation: fadeDown .45s ease-out;
+    cursor: pointer;
+    font-family: "Inter", "SF Pro Display", "Poppins", sans-serif;
+  }
+
+  /* Ensure flex always works when visible */
+  #seasonal-banner.show {
+    display: flex;
+  }
+
+  .seasonal-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .seasonal-icon {
+    width: 26px;
+    height: 26px;
+    filter: drop-shadow(0 0 7px rgba(220,180,60,.25));
+    animation: gentlepulse 2.4s infinite ease-in-out;
+  }
+
+  .seasonal-text {
+    color: #111;
+    letter-spacing: .35px;
+    font-weight: 600;
+    font-size: 16px;
+    user-select: none;
+  }
+
+  .seasonal-cta {
+    margin-left: auto;
+    background: linear-gradient(90deg, #d6b354, #f1d992);
+    color: #000;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .25s ease-out;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .seasonal-cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  #seasonal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 300;
+    cursor: pointer;
+    color: #555;
+    margin-left: 14px;
+  }
+  #seasonal-close:hover {
+    color: #b48c1e;
+  }
+
+  .snow {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 15% 30%, rgba(255,255,255,.55), transparent),
+      radial-gradient(2px 2px at 75% 15%, rgba(255,255,255,.55), transparent),
+      radial-gradient(2px 2px at 30% 70%, rgba(255,255,255,.55), transparent),
+      radial-gradient(2px 2px at 60% 80%, rgba(255,255,255,.55), transparent),
+      radial-gradient(2px 2px at 90% 50%, rgba(255,255,255,.55), transparent);
+    opacity: .65;
+    animation: snowDrift 8s linear infinite;
+  }
+
+  @keyframes snowDrift {
+    0% { background-position-y: 0px; }
+    100% { background-position-y: 80px; }
+  }
+
+  @keyframes fadeDown {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes gentlepulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+
+  #seasonal-banner:hover {
+    background: #fffffff6;
+  }
+
+  /* ✅ MOBILE FIX */
+  @media (max-width: 640px) {
+    #seasonal-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 14px;
+      gap: 10px;
+    }
+
+    .seasonal-text {
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .seasonal-cta {
+      width: 100%;
+      margin-left: 0;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    #seasonal-close {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      font-size: 22px;
+      margin-left: 0;
+    }
+  }
+</style>
+
+
+
+<script>
+  const banner   = document.getElementById("seasonal-banner");
+  const closeBtn = document.getElementById("seasonal-close");
+  const ctaBtn   = document.getElementById("seasonal-cta-btn");
+
+  const lastHide = localStorage.getItem("seasonal_hide_time");
+  const now = Date.now();
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  if (!lastHide || (now - lastHide > oneDay)) {
+    banner.style.display = "flex";
+  }
+
+  const scrollToPackage = () => {
+    const section = document.getElementById("seasonal");
+    section?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  ctaBtn.onclick = (e) => {
+    e.stopPropagation();
+    scrollToPackage();
+  };
+
+  banner.onclick = (e) => {
+    if (e.target.id !== "seasonal-close" && e.target !== ctaBtn) {
+      scrollToPackage();
+    }
+  };
+
+  closeBtn.onclick = (e) => {
+    e.stopPropagation();
+    banner.style.display = "none";
+    localStorage.setItem("seasonal_hide_time", Date.now());
+  };
+</script>
+
+        
       </div>
-      <div class="status-shopify inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold pl-6"> 
-        Connected
+      <div class="hidden md:flex items-center gap-3 text-sm text-gray-600">
+        <i class="fas fa-star text-yellow-400"></i>
+        <span class="font-medium">End-to-end encrypted channels</span>
       </div>
     </div>
   </header>
-
- <!-- Full-Screen Profile Card (Desktop Centered) -->
-<div class="w-full min-h-screen flex items-center justify-center bg-gray-50 px-6">
-  <aside class="relative w-full max-w-4xl p-8 rounded-2xl shadow-xl bg-white/90 backdrop-blur-md border border-gray-200 
-               hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out space-y-6">
-    <!-- Floating Glow Effect -->
-    <div class="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-green-200 via-transparent to-blue-200 opacity-0 hover:opacity-70 blur-2xl transition duration-700"></div>
-
-    <!-- Profile -->
-    <div class="text-center animate-fadeIn">
-      <div class="w-24 h-24 mx-auto mb-4 relative">
-        <img src="https://i.pinimg.com/736x/2f/53/58/2f535867ec2ea063d07e3c4148d18cf8.jpg" 
-             alt="Juan Manuel" 
-             class="w-full h-full object-cover rounded-full border-4 border-white shadow-md">
-        <span class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full animate-pulse"></span>
+<!-- ========================================
+       HERO SECTION
+       ======================================== -->
+  <section class="max-w-5xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
+    <!-- LEFT: ADVISOR CARD -->
+    <div class="premium-card rounded-3xl p-8 md:p-10 slide-up premium-hover">
+      <!-- Service overview -->
+      <div class="mb-6 p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200/50">
+        <p class="premium-text text-blue-900 font-medium">
+          We provide a <strong class="text-gradient-blue">complete compliance audit</strong>, SEO visibility review, and tailored growth strategy for your store.
+          Quick fixes, marketing guidance, and developer referrals if needed — all aimed at <strong class="text-gradient-emerald">boosting sales</strong> and securing your store.
+        </p>
       </div>
-      <h2 class="text-2xl font-bold text-gray-900 flex items-center justify-center gap-2">
-        Juan Manuel
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6">
-          <path fill="#34B7F1" d="M12 2.25l2.317 1.178 2.567-.001 1.178 2.317 2.317 1.178-.001 2.567 1.178 2.317-1.178 2.317.001 2.567-2.317 1.178-1.178 2.317-2.567-.001L12 21.75l-2.317-1.178-2.567.001-1.178-2.317-2.317-1.178.001-2.567L2.25 12l1.178-2.317-.001-2.567 2.317-1.178L6.922 3.427l2.567.001L12 2.25z"/>
-          <path fill="#fff" d="M10.6 14.6l-2.2-2.2 1.1-1.1 1.1 1.1 4.4-4.4 1.1 1.1-5.5 5.5z"/>
-        </svg>
-      </h2>
-      <p class="text-sm text-gray-600 font-medium">Shopify Compliance & Growth Specialist</p>
-    </div>
 
-    <!-- Bio -->
-    <p class="text-sm text-gray-700 leading-relaxed text-center max-w-2xl mx-auto animate-slideUp">
-       We partner with store owners to resolve compliance challenges and boost growth through targeted marketing, SEO, and performance optimization strategies. Share your case and take the first step.
-    </p>
+      <!-- Priority case notice -->
+      <div class="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/50 p-4 mb-6">
+        <svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6l4 2"/></svg>
+        <p class="premium-text text-amber-800">
+          <strong class="text-gradient-gold">Priority Case:</strong> Immediate advisor attention required for compliance review.
+        </p>
+      </div>
+ <!-- Developer Profile -->
+      <div class="flex items-start gap-8">
+        <div class="relative">
+          <img id="developerPhoto" src="" alt="Developer" class="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-2 border-emerald-200 shadow-lg" />
+        </div>
+        
+        <div class="flex-1">
+          <div class="flex items-center">
+            <h1 id="developerName" class="premium-heading-lg text-animate-in"></h1>
+            <div class="verification-tick">
+              <i class="fas fa-check text-white text-sm"></i>
+            </div>
+          </div>
+          <p id="developerTitle" class="text-gradient-emerald text-base font-semibold mt-2 text-animate-in-delay-1"></p>
 
-    <!-- Contact Buttons -->
-    <div class="space-y-3 max-w-md mx-auto">
-      <button id="waOpenBtn" class="relative w-full inline-flex items-center justify-center gap-3 py-3 rounded-lg font-semibold
-                   bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg hover:shadow-xl overflow-hidden group">
-        <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></span>
-        <i class="fa-brands fa-whatsapp"></i><span>Contact via WhatsApp</span>
-      </button>
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-gray-600 text-animate-in-delay-2">
+            <span id="devIdSpan" class="font-medium"></span>
+            <span id="projectIdSpan" class="font-medium"></span>
+          </div>
 
-      <button onclick="openForm('telegram')" class="relative w-full inline-flex items-center justify-center gap-3 py-3 rounded-lg font-semibold
-                   bg-gradient-to-r from-sky-400 to-sky-600 text-white shadow-lg hover:shadow-xl overflow-hidden group">
-        <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></span>
-        <i class="fa-brands fa-telegram"></i><span>Contact via Telegram</span>
-      </button>
-      <button onclick="openForm('email')" class="w-full inline-flex items-center justify-center gap-3 bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-lg focus-ring font-semibold transition-all duration-200">
-          <i class="fa-solid fa-envelope"></i><span>Contact via Email</span>
+          <div class="flex flex-wrap items-center gap-5 mt-3 text-sm text-gray-600">
+            <span id="expSpan" class="font-medium"></span>
+            <span id="builtSpan" class="font-medium"></span>
+            <span id="ratingSpan" class="font-medium"></span>
+          </div>
+
+          <div class="inline-flex items-center gap-3 mt-4 text-sm px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-green-50 text-emerald-700 border border-emerald-200/50 shadow-sm">
+            <i class="fas fa-shield-alt text-emerald-600"></i>
+            <span id="badgeSpan" class="font-semibold"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service description -->
+      <p class="mt-8 premium-text-lead leading-relaxed text-shadow-soft">
+        Your advisor will begin with a comprehensive <strong class="text-gradient-blue">staff-level compliance audit</strong> covering policies, store setup, security headers, and SEO visibility.
+        If technical fixes are required, you'll be referred to our certified developer partner network for seamless implementation.
+      </p>
+
+      <!-- CTA BUTTONS SECTION -->
+      <div class="grid sm:grid-cols-3 gap-4 mt-8">
+        <button data-channel="whatsapp" class="contactBtn premium-btn group inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-4 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          WhatsApp
+          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </button>
+
+        <button data-channel="telegram" class="contactBtn premium-btn group inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-4 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 4L7.5 12.5"/></svg>
+          Telegram
+          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </button>
+
+        <button data-channel="email" class="contactBtn premium-btn group inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-gray-800 to-gray-900 hover:from-black hover:to-gray-800 text-white py-4 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 6.5A2.5 2.5 0 0 1 4.5 4h15A2.5 2.5 0 0 1 22 6.5v11A2.5 2.5 0 0 1 19.5 20h-15A2.5 2.5 0 0 1 2 17.5v-11z"/></svg>
+          Secure Email
+          <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </button>
       </div>
 
-
-
-
-    <!-- Stats -->
-    <div class="bg-white/70 backdrop-blur-md p-4 rounded-xl border border-gray-200 shadow-sm animate-fadeIn delay-200 text-center">
-      <h4 class="text-sm font-bold text-gray-900 mb-2">Advisor Stats</h4>
-      <div class="text-sm text-gray-700 font-medium">
-        ⭐ Expert • 5+ years • 307+ stores helped • Rating 4.9/5
-      </div>
+      <!-- Security notice -->
+      <p class="mt-4 flex items-center gap-3 premium-text text-gray-600">
+        <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 11c1.657 0 3-1.567 3-3.5S13.657 4 12 4s-3 1.567-3 3.5S10.343 11 12 11z"/></svg>
+        All conversations are encrypted and handled under <strong class="text-gradient-emerald">strict confidentiality</strong>.
+      </p>
     </div>
-  </aside>
-</div>
-
-<!-- Animations -->
-<style>
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate-fadeIn { animation: fadeIn 0.8s ease forwards; }
-  .animate-slideUp { animation: slideUp 0.9s ease forwards; }
-  .delay-200 { animation-delay: 0.2s; }
-</style>
- <!-- Premium Ticker with Pro Slideshow + Captions -->
-<section class="ticker-section">
-  <!-- Ticker text -->
-  <div class="ticker-wrapper">
-    <div class="ticker">
-      🚀 Boost your Shopify store performance! • ⚡ Resolve compliance issues instantly! • 📈 Increase your SEO visibility and sales! • 💡 Expert marketing guidance!
-    </div>
-  </div>
-
-      </div>
+    
+     </div>
       <div class="hero-gallery__main-image">
         <video src="https://www.charleagency.com/assets/videos/hero-video.mp4" autoplay muted loop playsinline></video>
       </div>
@@ -558,28 +1013,35 @@ h1, h2, h3, h4 {
 </section>
 <!-- End Hero Gallery -->
 
+    <!-- RIGHT: HOW IT WORKS -->
+    <aside class="premium-card rounded-3xl p-8 md:p-10 slide-up premium-hover" style="animation-delay: 0.2s;">
+      <h2 class="premium-heading-md mb-5 text-shadow-soft">How this works</h2>
+      <ol class="space-y-4 premium-text">
+        <li class="flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <span><strong class="text-gradient-emerald">Staff-Level Audit</strong> → comprehensive review of compliance, setup, SEO visibility, and risk signals.</span>
+        </li>
+        <li class="flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <span><strong class="text-gradient-blue">Results Delivered</strong> → you receive a detailed diagnosis with prioritized action items.</span>
+        </li>
+        <li class="flex items-start gap-4">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-purple-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <span><strong class="text-gradient">Expert Referrals</strong> → seamless handoff to certified developer partners for implementation.</span>
+        </li>
+      </ol>
 
-<!-- Right Column -->
-<section class="lg:col-span-2 space-y-20">
-
-  <!-- 🌟 Elite Shopify Services -->
-  <div class="relative bg-gradient-to-br from-white via-white/95 to-gray-50 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200 p-14 overflow-hidden">
-
-    <!-- Glowing Background Orbs -->
-    <div class="absolute -top-32 -right-32 w-96 h-96 bg-green-400/20 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-pulse"></div>
-
-    <!-- Heading -->
-    <div class="relative z-10 text-center mb-16" data-aos="fade-up">
-      <h3 class="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight drop-shadow-sm">
-        🌟 Elite Shopify Services
-      </h3>
-      <p class="mt-6 text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
-        Designed for <span class="text-green-600 font-semibold">goal minded store owners</span> - we provide solutions that protect, scale, and future-proof your business.
-      </p>
-    </div>
-
-    <!-- Services Grid -->
+      <!-- Divider -->
+    <div class="relative z-10 my-16 border-t border-gray-200"></div>
+      
+      <!-- GROWTH SUPPORT SECTION -->
+       <!-- Services Grid -->
     <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10">
       
       <!-- Service Card -->
@@ -642,8 +1104,8 @@ h1, h2, h3, h4 {
         </div>
       </div>
     </div>
-
-    <!-- Divider -->
+          
+          <!-- Divider -->
     <div class="relative z-10 my-16 border-t border-gray-200"></div>
 
     <!-- ✅ Metrics Section -->
@@ -671,261 +1133,2013 @@ h1, h2, h3, h4 {
     <div class="relative z-10 text-center max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="700">
       <p class="text-lg text-gray-700 mb-8 leading-relaxed">
         We combine <span class="text-green-600 font-semibold">strategy, technology, and creativity</span> to deliver results that matter.  
-        Not just quick fixes - but <span class="font-medium">long-term growth</span> for your Shopify store.
+        Not just quick fixes — but <span class="font-medium">long-term growth</span> for your Shopify store.
       </p>
-     <a href="https://wa.me/2349135251130" target="_blank"
-   class="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-green-600 to-emerald-500 text-white font-semibold text-lg shadow-lg hover:shadow-green-300/70 hover:scale-105 transition">
-  <i class="fa-solid fa-rocket-launch"></i> Start Your Growth Journey
-</a>
-</div>
-</div>
-</section>
-      <!-- Ticket Section -->
-      <div class="card p-6">
-        <div class="flex items-start justify-between">
-          <div>
-            <div class="text-sm text-gray-500 font-medium uppercase tracking-wide">Ticket</div>
-            <div class="text-3xl font-bold shopify-heading">#MD57-097</div>
-          </div>
-          <div class="text-sm text-gray-600 text-right">
-            <div>Partner ID: <span class="font-bold text-gray-900">3855889</span></div>
-            <div class="mt-1">Status: <span class="text-green-700 font-bold">Active</span></div>
-          </div>
-        </div>
+          
+        </ul>
+        <button data-channel="whatsapp" class="contactBtn premium-btn mt-4 w-full rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 text-sm font-semibold transition-all duration-300 shadow-md">Talk to Growth Advisor</button>
       </div>
 
-      <!-- Case Progress Section -->
-      <div class="card p-6">
-        <div class="flex items-center justify-between mb-6">
-          <h3 class="shopify-heading text-xl">Case Progress</h3>
-          <div id="progressLabel" class="text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full font-semibold border border-green-200">Step 2 of 4</div>
-        </div>
-
-        <div class="steps-scroll flex items-center gap-2">
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <div class="step-dot active">1</div>
-            <div class="text-sm ml-2 whitespace-nowrap font-medium">Case Created</div>
-          </div>
-          <div class="step-line flex-1 bg-gray-300 active"></div>
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <div class="step-dot active">2</div>
-            <div class="text-sm ml-2 whitespace-nowrap font-medium">Advisor Assigned</div>
-          </div>
-          <div class="step-line flex-1 bg-gray-300"></div>
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <div class="step-dot">3</div>
-            <div class="text-sm ml-2 whitespace-nowrap font-medium">Pending Review</div>
-          </div>
-          <div class="step-line flex-1 bg-gray-300"></div>
-          <div class="flex items-center gap-2 min-w-[120px]">
-            <div class="step-dot">4</div>
-            <div class="text-sm ml-2 whitespace-nowrap font-medium">Active</div>
-          </div>
-        </div>
-      </div>
-
-     <!-- Recent Merchant Success Stories -->
-<div class="card p-8">
-  <h3 class="shopify-heading text-2xl mb-6">Recent Merchant Success Stories</h3>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stories-grid">
-
-    <!-- Success Story 1 -->
-    <div class="success-wix">
-      <video class="w-full h-40 object-cover rounded-lg" autoplay muted loop playsinline>
-        <source src="https://v1.pinimg.com/videos/mc/expMp4/d5/00/1f/d5001f1e9b700f8992c70aac15a2f245_t1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="p-6">
-        <div class="success-metric">+30% conversion</div>
-        <p class="text-sm text-gray-600 leading-relaxed">
-          Quick checkout fixes & trust badges boosted conversions by 30% in 2 weeks for a wellness brand.
+      <!-- Disclosure -->
+      <div class="mt-6 rounded-2xl border border-gray-200/50 p-5 premium-text bg-gray-50/50">
+        <p class="font-semibold text-gray-800 mb-2 text-sm">Fair-Use Disclosure</p>
+        <p class="text-xs leading-relaxed">
+          This site is operated by an independent partner to continue merchant cases after staff interactions.
+          References are for workflow clarity only.
         </p>
       </div>
-    </div>
+    </aside>
+  </section>
 
-    <!-- Success Story 2 -->
-    <div class="success-wix">
-      <video class="w-full h-40 object-cover rounded-lg" autoplay muted loop playsinline>
-        <source src="https://v1.pinimg.com/videos/mc/expMp4/2f/a5/71/2fa571d90cddf28fb4656dac4f26468f_t1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="p-6">
-        <div class="success-metric">+45% organic traffic</div>
-        <p class="text-sm text-gray-600 leading-relaxed">
-          SEO audit + metadata improvements increased organic visits by 45% in 60 days for a home goods store.
-        </p>
+  <!-- ========================================
+       TICKER & CLIENT SLIDESHOW
+       ======================================== -->
+  <section class="ticker-section">
+    <!-- Premium ticker bar -->
+    <div class="ticker-wrapper">
+      <div class="ticker">
+        🏆 Trusted by 500+ Shopify merchants worldwide • 🚀 98% client satisfaction rate • 💎 Shopify Partner verified • ⭐ 4.9/5 average rating • 📈 $50M+ in client revenue generated • 🔒 Enterprise-level security • 
+        🏆 Trusted by 500+ Shopify merchants worldwide • 🚀 98% client satisfaction rate • 💎 Shopify Partner verified • ⭐ 4.9/5 average rating • 📈 $50M+ in client revenue generated • 🔒 Enterprise-level security •
       </div>
     </div>
+    
+    
+    <!-- ========================================
+       SUCCESS STORIES
+       ======================================== -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <div class="premium-card rounded-3xl p-10">
+      <h3 class="premium-heading-lg text-center mb-8 text-shadow-medium">Recent Merchant Success Stories</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-    <!-- Success Story 3 -->
-    <div class="success-wix">
-      <video class="w-full h-40 object-cover rounded-lg" autoplay muted loop playsinline>
-        <source src="https://v1.pinimg.com/videos/mc/expMp4/a4/d7/62/a4d762f9abc98aac436c0813e82773ec_t1.mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="p-6">
-        <div class="success-metric">+40% revenue</div>
-        <p class="text-sm text-gray-600 leading-relaxed">
-          CRO & ad funnel optimization scaled revenue 40% quarter-over-quarter for a fashion merchant.
-        </p>
+        <!-- Success Story 1 -->
+        <div class="success-wix">
+          <video class="w-full h-48 object-cover rounded-t-2xl" autoplay muted loop playsinline>
+            <source src="https://v1.pinimg.com/videos/mc/expMp4/d5/00/1f/d5001f1e9b700f8992c70aac15a2f245_t1.mp4" type="video/mp4">
+          </video>
+          <div class="p-6">
+            <div class="success-metric text-shadow-soft">+30% conversion</div>
+            <p class="premium-text leading-relaxed">
+              Quick checkout fixes & trust badges boosted conversions by <strong class="text-gradient-emerald">30% in 2 weeks</strong> for a wellness brand.
+            </p>
+          </div>
+        </div>
+
+        <!-- Success Story 2 -->
+        <div class="success-wix">
+          <video class="w-full h-48 object-cover rounded-t-2xl" autoplay muted loop playsinline>
+            <source src="https://v1.pinimg.com/videos/mc/expMp4/2f/a5/71/2fa571d90cddf28fb4656dac4f26468f_t1.mp4" type="video/mp4">
+          </video>
+          <div class="p-6">
+            <div class="success-metric text-shadow-soft">+45% organic traffic</div>
+            <p class="premium-text leading-relaxed">
+              SEO audit + metadata improvements increased organic visits by <strong class="text-gradient-blue">45% in 60 days</strong> for a home goods store.
+            </p>
+          </div>
+        </div>
+
+        <!-- Success Story 3 -->
+        <div class="success-wix">
+          <video class="w-full h-48 object-cover rounded-t-2xl" autoplay muted loop playsinline>
+            <source src="https://v1.pinimg.com/videos/mc/expMp4/a4/d7/62/a4d762f9abc98aac436c0813e82773ec_t1.mp4" type="video/mp4">
+          </video>
+          <div class="p-6">
+            <div class="success-metric text-shadow-soft">+40% revenue</div>
+            <p class="premium-text leading-relaxed">
+              CRO & ad funnel optimization scaled revenue <strong class="text-gradient-gold">40% quarter-over-quarter</strong> for a fashion merchant.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</div>
-
-      <!-- Case Study Section -->
-      <section class="max-w-5xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
-        <div class="success-wix p-6 flex flex-col gap-4">
-          <img src="https://i.pinimg.com/1200x/06/e8/b8/06e8b809c600ba78eab41d151ce309cc.jpg" alt="Conversion lift chart" class="w-full h-40 sm:h-32 object-cover rounded-xl" />
-          <div>
-            <div class="success-metric text-lg">+30% Conversion Lift</div>
-            <p class="text-sm text-gray-600 leading-relaxed">Quick checkout fixes & trust badges boosted conversions by 30% in 2 weeks.</p>
-          </div>
-        </div>
-        <div class="success-wix p-6 flex flex-col gap-4">
-          <img src="https://i.pinimg.com/736x/e4/8f/df/e48fdf1b74b2471bf537193df06c01ac.jpg" alt="SEO visibility" class="w-full h-40 sm:h-32 object-cover rounded-xl" />
-          <div>
-            <div class="success-metric text-lg">SEO & Visibility Gains</div>
-            <p class="text-sm text-gray-600 leading-relaxed">SEO audit + metadata improvements increased organic visits by 45% in 60 days.</p>
-          </div>
-        </div>
-        <div class="success-wix p-6 flex flex-col gap-4">
-          <img src="https://i.pinimg.com/736x/fb/fa/1d/fbfa1dabc7dd0a3ceec42dd23e140a98.jpg" alt="Revenue growth graph" class="w-full h-40 sm:h-32 object-cover rounded-xl" />
-          <div>
-            <div class="success-metric text-lg">Quarterly Revenue +40%</div>
-            <p class="text-sm text-gray-600 leading-relaxed">CRO & ad funnel tweaks scaled revenue 40% quarter-over-quarter for a fashion merchant.</p>
-          </div>
-        </div>
-      </section>
-      
-  <title>Store Growth Services</title>
-  <script src="https://kit.fontawesome.com/your-fa-kit.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-
-<!-- Services Section -->
-<section class="relative bg-gradient-to-b from-gray-900 via-gray-800 to-black py-20 px-6">
-  <div class="max-w-7xl mx-auto text-center">
-    <!-- Heading -->
-    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
-      🚀 Accelerate Your Store Growth
-    </h2>
-    <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-14">
-      Partner with our <span class="text-green-400 font-semibold">Shopify-certified experts</span> to unlock 
-      traffic, conversions, and long-term scalability. Every service is designed to 
-      <span class="text-green-400 font-semibold">maximize revenue</span> and streamline your operations.
+  </section>
+    
+    
+<!-- Seasonal Interactive Funnel -->
+    <section id="seasonal">
+<section class="seasonal-funnel" aria-labelledby="seasonalHeading">
+  <div class="intro">
+    <div class="intro-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+      Strategic Growth Partner
+    </div>
+    <h1 id="seasonalHeading">Turn Every Season Into <span class="gradient-text">Revenue Gold</span></h1>
+    <p>
+      Your customers are actively shopping on <strong>Instagram, TikTok, and Facebook Shops</strong> right now.
+      Partner with our expert advisors to build seasonal strategies that drive real conversions.
     </p>
+  </div>
 
-    <!-- Services Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Card -->
-      <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
-        <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
-          <i class="fa-solid fa-store text-green-400 text-xl"></i>
+  <div class="season-grid" role="list">
+    <!-- Black Friday -->
+    <article class="season-card" data-season="blackfriday" role="listitem">
+      <div class="card-inner">
+        <div class="img-wrap">
+          <div class="season-icon">⚡</div>
+          <img src="https://i.pinimg.com/736x/3c/f8/de/3cf8dea454f7638db44f0b9415993bba.jpg" alt="Black Friday deals" loading="lazy">
+          <div class="img-overlay"></div>
         </div>
-        <h3 class="text-xl font-semibold text-white mb-2">Store Optimization</h3>
-        <p class="text-gray-400 mb-4">Streamline navigation, enhance speed & UX, and create a frictionless buying journey.</p>
-        <span class="block text-green-400 font-semibold mb-4">Starting at $299</span>
-        <button onclick="openModal('Store Optimization','Starting at $299')" 
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-          Get Started
-        </button>
-      </div>
-
-      <!-- Card -->
-      <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
-        <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
-          <i class="fa-solid fa-magnifying-glass-chart text-green-400 text-xl"></i>
+        <div class="content-wrap">
+          <div class="badge-row">
+            <span class="premium-badge">Premium</span>
+            <span class="timing-badge">Nov 24-29</span>
+          </div>
+          <h2>Black Friday</h2>
+          <p>Peak shopping season demands peak performance. Our team ensures your store captures every ready-to-buy customer with precision targeting and conversion optimization.</p>
+          <div class="features">
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+              Ad Targeting
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Email Flows
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1"/>
+                <circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              Shop Setup
+            </span>
+          </div>
+          <button class="open-offer" data-target="blackfriday" aria-controls="offerModal">
+            <span>Get Started</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
-        <h3 class="text-xl font-semibold text-white mb-2">Advanced SEO</h3>
-        <p class="text-gray-400 mb-4">Technical audits, keyword strategies & backlinks to boost organic growth.</p>
-        <span class="block text-green-400 font-semibold mb-4">Starting at $399</span>
-        <button onclick="openModal('Advanced SEO','Starting at $399')" 
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-          Get Started
-        </button>
       </div>
+    </article>
 
-      <!-- Card -->
-      <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
-        <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
-          <i class="fa-solid fa-chart-line text-green-400 text-xl"></i>
+    <!-- Christmas -->
+    <article class="season-card" data-season="christmas" role="listitem">
+      <div class="card-inner">
+        <div class="img-wrap">
+          <div class="season-icon">🎄</div>
+          <img src="https://i.imgur.com/pxxDUI2.png" alt="Christmas shopping" loading="lazy">
+          <div class="img-overlay"></div>
         </div>
-        <h3 class="text-xl font-semibold text-white mb-2">CRO & A/B Testing</h3>
-        <p class="text-gray-400 mb-4">Run data-driven experiments that increase conversions and customer retention.</p>
-        <span class="block text-green-400 font-semibold mb-4">Starting at $349</span>
-        <button onclick="openModal('CRO & A/B Testing','Starting at $349')" 
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-          Get Started
-        </button>
-      </div>
-
-      <!-- Card -->
-      <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
-        <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
-          <i class="fa-solid fa-bullhorn text-green-400 text-xl"></i>
+        <div class="content-wrap">
+          <div class="badge-row">
+            <span class="premium-badge">Premium</span>
+            <span class="timing-badge">Dec 1-25</span>
+          </div>
+          <h2>Christmas</h2>
+          <p>Emotional buying peaks during the holidays. We craft campaigns that connect hearts to your brand and create memorable shopping experiences.</p>
+          <div class="features">
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 12v10H4V12"/>
+                <path d="M2 7h20v5H2z"/>
+                <path d="M12 22V7"/>
+                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+              </svg>
+              Gift Bundles
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              Festive Ads
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+              Retargeting
+            </span>
+          </div>
+          <button class="open-offer" data-target="christmas" aria-controls="offerModal">
+            <span>Get Started</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
-        <h3 class="text-xl font-semibold text-white mb-2">Growth Marketing</h3>
-        <p class="text-gray-400 mb-4">Leverage automation, loyalty flows & retargeting campaigns that scale sales.</p>
-        <span class="block text-green-400 font-semibold mb-4">Starting at $279</span>
-        <button onclick="openModal('Growth Marketing','Starting at $279')" 
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-          Get Started
-        </button>
       </div>
+    </article>
 
-      <!-- Card -->
-      <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
-        <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
-          <i class="fa-solid fa-server text-green-400 text-xl"></i>
+    <!-- New Year -->
+    <article class="season-card" data-season="newyear" role="listitem">
+      <div class="card-inner">
+        <div class="img-wrap">
+          <div class="season-icon">🎉</div>
+          <img src="https://i.imgur.com/A3xWWJU.png" alt="New Year deals" loading="lazy">
+          <div class="img-overlay"></div>
         </div>
-        <h3 class="text-xl font-semibold text-white mb-2">Shopify Plus Migration</h3>
-        <p class="text-gray-400 mb-4">Enterprise-level migration with custom development & scalability features.</p>
-        <span class="block text-green-400 font-semibold mb-4">Starting at $599</span>
-        <button onclick="openModal('Shopify Plus Migration','Starting at $599')" 
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-          Get Started
-        </button>
-      </div>
-
-      <!-- Card -->
-      <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
-        <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
-          <i class="fa-solid fa-chart-pie text-green-400 text-xl"></i>
+        <div class="content-wrap">
+          <div class="badge-row">
+            <span class="premium-badge">Premium</span>
+            <span class="timing-badge">Dec 26-Jan 7</span>
+          </div>
+          <h2>New Year</h2>
+          <p>Fresh starts mean fresh customers. Position your products as the must-have for new beginnings and resolutions.</p>
+          <div class="features">
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"/>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+              </svg>
+              Store Refresh
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+              Social Ads
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              Retention
+            </span>
+          </div>
+          <button class="open-offer" data-target="newyear" aria-controls="offerModal">
+            <span>Get Started</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
         </div>
-        <h3 class="text-xl font-semibold text-white mb-2">Analytics & Reporting</h3>
-        <p class="text-gray-400 mb-4">Track KPIs with GA4, dashboards & custom insights for smarter decisions.</p>
-        <span class="block text-green-400 font-semibold mb-4">Starting at $199</span>
-        <button onclick="openModal('Analytics & Reporting','Starting at $199')" 
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
-          Get Started
-        </button>
       </div>
+    </article>
 
-    </div>
+    <!-- Winter -->
+    <article class="season-card" data-season="winter" role="listitem">
+      <div class="card-inner">
+        <div class="img-wrap">
+          <div class="season-icon">❄️</div>
+          <img src="https://i.imgur.com/tvFkrxq.jpeg" alt="Winter sales" loading="lazy">
+          <div class="img-overlay"></div>
+        </div>
+        <div class="content-wrap">
+          <div class="badge-row">
+            <span class="premium-badge">Premium</span>
+            <span class="timing-badge">Jan-Feb</span>
+          </div>
+          <h2>Winter</h2>
+          <p>Turn the quiet season into your secret weapon with strategic retargeting and smart bundling that keeps revenue flowing.</p>
+          <div class="features">
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 7l-7 5 7 5V7z"/>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+              </svg>
+              TikTok Ads
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              </svg>
+              Bundles
+            </span>
+            <span class="feature-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+              </svg>
+              Warm Flows
+            </span>
+          </div>
+          <button class="open-offer" data-target="winter" aria-controls="offerModal">
+            <span>Get Started</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
 
-    <!-- CTA -->
-    <div class="mt-20">
-      <h3 class="text-2xl font-bold text-white mb-4">
-        Ready to scale your store to the next level?
-      </h3>
-      <p class="text-gray-300 mb-6">Book a free consultation with our Shopify growth specialists today.</p>
-      <a href="javascript:void(0)" onclick="openModal('Free Consultation','No cost')" 
-         class="inline-block px-8 py-4 bg-green-500 text-black font-bold rounded-full hover:bg-green-400 transition">
-        Book Free Consultation
-      </a>
+  <!-- Modal -->
+  <div id="offerModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content" role="document">
+      <button class="close" aria-label="Close offer modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6L18 18"/>
+        </svg>
+      </button>
+      <div id="offerDetails" class="offer-details"></div>
     </div>
   </div>
 </section>
 
-<!-- Service Modal -->
+<style>
+  :root { 
+    --primary: #2e2e2e;
+    --primary-dark: #1a1a1a;
+    --accent: #5c6ac4;
+    --accent-hover: #4c5db8;
+    --accent-light: #f4f5f9;
+    --success: #00a862;
+    --success-light: #d4f5e9;
+    --text: #202223;
+    --text-secondary: #6d7175;
+    --text-muted: #8c9196;
+    --border: #e1e3e5;
+    --border-light: #f1f2f4;
+    --bg: #f6f6f7;
+    --card-bg: #ffffff;
+    --shadow-sm: 0 1px 0 rgba(0,0,0,0.05);
+    --shadow-card: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15);
+    --shadow-card-hover: 0 4px 8px rgba(0,0,0,0.08), 0 0 0 1px rgba(63,63,68,0.05);
+    --shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+    --shadow-xl: 0 12px 28px rgba(0,0,0,0.12);
+    --radius-base: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+  }
+  
+  * { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+  }
+  
+  .seasonal-funnel { 
+    min-height: 100vh;
+    padding: 3rem 1rem; 
+    background: var(--bg);
+  }
+  
+  .intro { 
+    max-width: 920px; 
+    margin: 0 auto 3rem; 
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .intro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--card-bg);
+    color: var(--text);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 0.2px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border);
+  }
+
+  .intro-badge svg {
+    fill: var(--accent);
+    width: 14px;
+    height: 14px;
+  }
+  
+  .intro h1 { 
+    font-size: clamp(1.75rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--primary-dark);
+    padding: 0 0.5rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .intro p { 
+    color: var(--text-secondary); 
+    font-size: clamp(0.938rem, 2vw, 1.125rem);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.65;
+    padding: 0 0.5rem;
+  }
+
+  /* ===================================
+     RESPONSIVE GRID SYSTEM
+     =================================== */
+  .season-grid { 
+    display: grid; 
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+  }
+
+  /* Tablet - 2 columns */
+  @media (min-width: 640px) {
+    .season-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+  }
+
+  /* Desktop - 4 columns */
+  @media (min-width: 1024px) {
+    .season-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .seasonal-funnel {
+      padding: 5rem 2rem;
+    }
+    
+    .intro {
+      margin-bottom: 4rem;
+    }
+  }
+
+  /* Large Desktop - max width enforcement */
+  @media (min-width: 1400px) {
+    .season-grid {
+      gap: 2rem;
+    }
+  }
+
+  .season-card { 
+    background: var(--card-bg);
+    border-radius: var(--radius-lg); 
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .season-card:hover { 
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(92, 106, 196, 0.2);
+  }
+
+  .card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .img-wrap { 
+    width: 100%; 
+    aspect-ratio: 16/9; 
+    overflow: hidden; 
+    position: relative;
+    background: var(--border-light);
+    flex-shrink: 0;
+  }
+
+  .season-icon {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    z-index: 2;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  @media (min-width: 1024px) {
+    .season-icon {
+      width: 52px;
+      height: 52px;
+      font-size: 1.5rem;
+      top: 1rem;
+      left: 1rem;
+    }
+  }
+
+  .img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.15) 100%);
+    z-index: 1;
+  }
+  
+  .img-wrap img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .season-card:hover .img-wrap img { 
+    transform: scale(1.05);
+  }
+
+  .content-wrap { 
+    padding: 1.25rem; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  @media (min-width: 640px) {
+    .content-wrap {
+      padding: 1.5rem;
+      gap: 0.875rem;
+    }
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .premium-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 4px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .timing-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    background: var(--border-light);
+    color: var(--text-secondary);
+    border-radius: 4px;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  
+  .content-wrap h2 { 
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  
+  .content-wrap > p { 
+    color: var(--text-secondary); 
+    font-size: clamp(0.875rem, 2vw, 0.938rem);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .features {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.25rem 0;
+  }
+
+  .feature-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.688rem;
+    padding: 0.375rem 0.625rem;
+    background: var(--border-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .feature-tag svg {
+    stroke: var(--text-muted);
+    width: 10px;
+    height: 10px;
+  }
+
+  @media (min-width: 640px) {
+    .feature-tag {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+    }
+    
+    .feature-tag svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  
+  .content-wrap button { 
+    margin-top: 0.5rem;
+    background: var(--primary);
+    color: #fff; 
+    padding: 0.875rem 1.25rem; 
+    border-radius: var(--radius-base); 
+    border: 0; 
+    cursor: pointer; 
+    font-weight: 600; 
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    .content-wrap button {
+      font-size: 0.938rem;
+      padding: 0.875rem 1.5rem;
+    }
+  }
+
+  .content-wrap button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--primary-dark);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .content-wrap button span,
+  .content-wrap button svg {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .content-wrap button:focus { 
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  
+  .content-wrap button:hover::before {
+    opacity: 1;
+  }
+
+  .content-wrap button:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .content-wrap button:hover svg {
+    transform: translateX(3px);
+  }
+
+  .content-wrap button svg {
+    transition: transform 0.2s ease;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ===================================
+     MODAL RESPONSIVE STYLES
+     =================================== */
+  .modal { 
+    display: none; 
+    position: fixed; 
+    inset: 0;
+    z-index: 9999; 
+    padding: 1rem;
+    align-items: center; 
+    justify-content: center;
+    overflow-y: auto;
+  }
+  
+  .modal[aria-hidden="false"] { 
+    display: flex; 
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.48);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .modal-content { 
+    width: 100%; 
+    max-width: 480px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    position: relative; 
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+    border: 1px solid var(--border);
+    margin: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .modal-content {
+      max-width: 600px;
+      padding: 2rem;
+      border-radius: var(--radius-xl);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .modal-content {
+      max-width: 680px;
+      padding: 2.5rem;
+    }
+  }
+  
+  .close { 
+    position: absolute; 
+    right: 1rem;
+    top: 1rem;
+    border: 1px solid var(--border); 
+    background: var(--card-bg);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; 
+    transition: all 0.2s ease;
+    z-index: 10;
+    color: var(--text-secondary);
+  }
+
+  @media (min-width: 640px) {
+    .close {
+      right: 1.5rem;
+      top: 1.5rem;
+    }
+  }
+  
+  .close:hover {
+    background: var(--border-light);
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+  
+  .offer-details h2 { 
+    margin: 0 0 0.5rem 0; 
+    font-size: clamp(1.375rem, 4vw, 1.875rem);
+    font-weight: 600;
+    padding-right: 2.5rem;
+    color: var(--primary-dark);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  
+  .offer-details > p { 
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.65;
+    font-size: clamp(0.938rem, 2vw, 1rem);
+  }
+
+  .offer-details ul { 
+    margin: 0 0 1.25rem 0;
+    padding: 0;
+    list-style: none;
+    background: var(--accent-light);
+    border-radius: var(--radius-base);
+    padding: 0.875rem;
+  }
+
+  @media (min-width: 640px) {
+    .offer-details ul {
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .offer-details ul li {
+    padding: 0.625rem 0 0.625rem 1.75rem;
+    position: relative;
+    color: var(--text);
+    border-bottom: 1px solid rgba(92, 106, 196, 0.1);
+    font-size: clamp(0.875rem, 2vw, 0.938rem);
+    line-height: 1.5;
+  }
+
+  @media (min-width: 640px) {
+    .offer-details ul li {
+      padding: 0.75rem 0 0.75rem 1.75rem;
+    }
+  }
+
+  .offer-details ul li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .offer-details ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.875rem;
+    width: 16px;
+    height: 16px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .offer-details ul li::after {
+    content: '✓';
+    position: absolute;
+    left: 4px;
+    top: 0.75rem;
+    color: white;
+    font-weight: bold;
+    font-size: 0.75rem;
+  }
+  
+  .offer-badge { 
+    display: inline-block; 
+    background: linear-gradient(135deg, var(--success), #00d672);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-base); 
+    font-weight: 700; 
+    margin: 1rem 0 1.25rem 0;
+    font-size: clamp(0.938rem, 2vw, 1rem);
+    box-shadow: 0 2px 8px rgba(0, 168, 98, 0.25);
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 640px) {
+    .offer-badge {
+      padding: 0.875rem 1.5rem;
+      margin: 1rem 0 1.5rem 0;
+    }
+  }
+
+  .advisor-intro {
+    background: var(--accent-light);
+    padding: 1rem;
+    border-radius: var(--radius-base);
+    margin: 1.25rem 0;
+    border-left: 3px solid var(--accent);
+  }
+
+  @media (min-width: 640px) {
+    .advisor-intro {
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+    }
+  }
+
+  .advisor-intro p {
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(0.875rem, 2vw, 0.938rem);
+    line-height: 1.6;
+  }
+
+  /* ===================================
+     FORM RESPONSIVE STYLES
+     =================================== */
+  form.lead { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    form.lead {
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+  }
+
+  form.lead label {
+    font-weight: 600;
+    color: var(--text);
+    font-size: clamp(0.75rem, 2vw, 0.813rem);
+    margin-bottom: 0.375rem;
+    display: block;
+    letter-spacing: 0.2px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form.lead input, 
+  form.lead select,
+  form.lead textarea { 
+    padding: 0.75rem;
+    border-radius: var(--radius-base); 
+    border: 1px solid var(--border);
+    font-size: clamp(0.875rem, 2vw, 0.938rem);
+    font-family: inherit;
+    transition: all 0.2s ease;
+    background: var(--card-bg);
+    color: var(--text);
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    form.lead input,
+    form.lead select,
+    form.lead textarea {
+      padding: 0.75rem 0.875rem;
+    }
+  }
+
+  form.lead textarea {
+    min-height: 80px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 640px) {
+    form.lead textarea {
+      min-height: 100px;
+    }
+  }
+
+  form.lead input:focus,
+  form.lead select:focus,
+  form.lead textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.1);
+  }
+
+  form.lead input::placeholder,
+  form.lead textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .char-count {
+    font-size: 0.688rem;
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: 0.25rem;
+  }
+  
+  form.lead button.submit-btn { 
+    margin-top: 0.5rem; 
+    background: var(--accent);
+    color: #fff; 
+    border: 0; 
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius-base); 
+    font-weight: 600; 
+    font-size: clamp(0.938rem, 2vw, 1rem);
+    cursor: pointer; 
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: -0.01em;
+    width: 100%;
+  }
+
+  @media (min-width: 640px) {
+    form.lead button.submit-btn {
+      padding: 1rem 2rem;
+    }
+  }
+
+  form.lead button.submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent-hover);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  form.lead button.submit-btn span {
+    position: relative;
+    z-index: 1;
+  }
+
+  form.lead button.submit-btn:hover::before {
+    opacity: 1;
+  }
+
+  form.lead button.submit-btn:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  form.lead button.submit-btn:active {
+    transform: scale(0.98);
+  }
+
+  form.lead button.submit-btn:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  
+  .contact-options { 
+    display: flex; 
+    gap: 0.75rem;
+    margin-top: 1rem; 
+    flex-direction: column;
+  }
+
+  @media (min-width: 640px) {
+    .contact-options {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+  
+  .contact-options a { 
+    flex: 1;
+    min-width: 100%;
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-base); 
+    text-decoration: none; 
+    color: #fff; 
+    font-weight: 600; 
+    transition: all 0.2s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-card);
+    font-size: clamp(0.875rem, 2vw, 0.938rem);
+  }
+
+  @media (min-width: 640px) {
+    .contact-options a {
+      min-width: calc(50% - 0.375rem);
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  .contact-options a:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .contact-options a:active {
+    transform: translateY(0);
+  }
+  
+  .whatsapp { 
+    background: linear-gradient(135deg, #25D366, #128C7E);
+  }
+  
+  .telegram { 
+    background: linear-gradient(135deg, #0088cc, #0066a8);
+  }
+
+  #afterSubmit {
+    background: var(--success-light);
+    padding: 1.25rem;
+    border-radius: var(--radius-base);
+    border-left: 3px solid var(--success);
+  }
+
+  @media (min-width: 640px) {
+    #afterSubmit {
+      padding: 1.5rem;
+    }
+  }
+
+  #afterSubmit p {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: clamp(0.875rem, 2vw, 0.938rem);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  /* ===================================
+     SCROLLBAR STYLING
+     =================================== */
+  .modal-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  @media (min-width: 640px) {
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+  }
+
+  .modal-content::-webkit-scrollbar-track {
+    background: var(--border-light);
+    border-radius: 10px;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+
+  /* ===================================
+     MOBILE-SPECIFIC OPTIMIZATIONS
+     =================================== */
+  @media (max-width: 639px) {
+    .intro {
+      padding: 0;
+    }
+
+    .seasonal-funnel {
+      padding: 2rem 0.75rem;
+    }
+
+    .season-grid {
+      padding: 0;
+    }
+
+    .season-card {
+      margin: 0 0.25rem;
+    }
+
+    .modal {
+      padding: 0.5rem;
+    }
+
+    .modal-content {
+      margin: 0.5rem;
+      border-radius: var(--radius-base);
+    }
+
+    /* Prevent horizontal scroll */
+    body {
+      overflow-x: hidden;
+    }
+  }
+
+  /* Touch-friendly tap targets on mobile */
+  @media (hover: none) and (pointer: coarse) {
+    .content-wrap button,
+    .contact-options a,
+    form.lead button.submit-btn {
+      min-height: 44px;
+    }
+
+    .close {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  const offerContent = {
+    blackfriday: {
+      title: "⚡ Black Friday Power Setup",
+      desc: "Get primed before the Black Friday storm. Our advisors will set up offers, ads, and bundles that stop the scroll and convert browsers into buyers.",
+      items: [
+        "Facebook & Instagram Shop setup & optimization",
+        "High-converting ad campaign targeting strategy",
+        "Automated discount email & SMS flows",
+        "Live buyer engagement & chat setup",
+        "Conversion-optimized landing pages"
+      ],
+      offer: "Up to 50% OFF Full Black Friday Setup",
+      services: [
+        "Marketing Campaign Setup",
+        "Social Media Shop Integration",
+        "Ad Copy & Creatives",
+        "Store Optimization",
+        "Email & SMS Automation",
+        "Security / Fraud Alert",
+        "Full Package (Everything)"
+      ]
+    },
+    christmas: {
+      title: "🎄 Christmas Profit Plan",
+      desc: "Use story-led campaigns and gift bundles to turn holiday emotion into purchases. Our team creates festive experiences that convert.",
+      items: [
+        "Festive ad content with seasonal storytelling",
+        "Strategic gift bundles & upsell sequences",
+        "Holiday-themed email & SMS campaigns",
+        "Last-minute buyer retargeting setup",
+        "Christmas landing page design"
+      ],
+      offer: "Free Email Setup + 30% OFF Campaign Plan",
+      services: [
+        "Marketing Campaign Setup",
+        "Social Media Shop Integration",
+        "Ad Copy & Creatives",
+        "Store Optimization",
+        "Email & SMS Automation",
+        "Security / Fraud Alert",
+        "Full Package (Everything)"
+      ]
+    },
+    newyear: {
+      title: "🎉 New Year Growth Setup",
+      desc: "Position your products as 'new year must-haves' and keep momentum going. Start the year with strong campaigns and returning customers.",
+      items: [
+        "Store refresh & visual rebrand",
+        "Social ad optimization for new year goals",
+        "Customer retention automation flows",
+        "Countdown relaunch campaign",
+        "Resolution-focused messaging strategy"
+      ],
+      offer: "30% OFF Ad Optimization Package",
+      services: [
+        "Marketing Campaign Setup",
+        "Social Media Shop Integration",
+        "Ad Copy & Creatives",
+        "Store Optimization",
+        "Email & SMS Automation",
+        "Security / Fraud Alert",
+        "Full Package (Everything)"
+      ]
+    },
+    winter: {
+      title: "❄️ Winter Sales Booster",
+      desc: "Heat up slow months with retargeting, bundles, and TikTok-native creative. Turn the quiet season into your secret sales weapon.",
+      items: [
+        "TikTok + Meta Ads creative setup",
+        "Strategic bundle campaigns & pricing",
+        "Winter-themed banners & visuals",
+        "Warm audience retargeting flows",
+        "Seasonal product positioning"
+      ],
+      offer: "40% OFF Social Ads Setup",
+      services: [
+        "Marketing Campaign Setup",
+        "Social Media Shop Integration",
+        "Ad Copy & Creatives",
+        "Store Optimization",
+        "Email & SMS Automation",
+        "Security / Fraud Alert",
+        "Full Package (Everything)"
+      ]
+    }
+  };
+
+  const modal = document.getElementById('offerModal');
+  const offerDetails = document.getElementById('offerDetails');
+
+  function openModalFor(key) {
+    const data = offerContent[key];
+    if (!data) return;
+
+    const serviceOptions = data.services.map(s => `<option value="${s}">${s}</option>`).join('');
+
+    offerDetails.innerHTML = `
+      <h2 id="modalTitle">${data.title}</h2>
+      <p>${data.desc}</p>
+      <ul>${data.items.map(i => `<li>${i}</li>`).join('')}</ul>
+      <div class="offer-badge">${data.offer}</div>
+
+      <div class="advisor-intro">
+        <p><strong>👋 Ready to lock this in?</strong> Fill out the form below and our live advisor will reach out to tailor your perfect seasonal strategy.</p>
+      </div>
+
+      <form class="lead" id="leadForm" aria-label="Talk to Live Advisor">
+        <div class="form-group">
+          <label for="fullname">Full Name *</label>
+          <input id="fullname" name="fullname" type="text" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input id="email" name="email" type="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="storeurl">Store URL *</label>
+          <input id="storeurl" name="storeurl" type="url" placeholder="https://yourstore.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="service">What Service Do You Need? *</label>
+          <select id="service" name="service" required>
+            <option value="">Select a service...</option>
+            ${serviceOptions}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Additional Message (Optional)</label>
+          <textarea id="message" name="message" placeholder="Tell us more about your goals, challenges, or specific needs..." maxlength="500"></textarea>
+          <div class="char-count"><span id="charCount">0</span>/500</div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span>📩 Connect Me to Live Advisor</span>
+        </button>
+      </form>
+
+      <div id="afterSubmit" style="display:none;">
+        <p>✅ Perfect! Our advisor is online now. Pick where you'd like to chat live:</p>
+        <div class="contact-options">
+          <a class="whatsapp" id="waLink" href="https://wa.me/2349032365125" target="_blank" rel="noopener">
+            💬 WhatsApp Chat
+          </a>
+          <a class="telegram" id="tgLink" href="https://t.me/Xcellexert" target="_blank" rel="noopener">
+            📨 Telegram Chat
+          </a>
+        </div>
+      </div>
+    `;
+
+    modal.setAttribute('aria-hidden', 'false');
+    modal.style.display = 'flex';
+
+    // Character counter for textarea
+    const messageField = document.getElementById('message');
+    const charCount = document.getElementById('charCount');
+    
+    messageField.addEventListener('input', function() {
+      charCount.textContent = this.value.length;
+    });
+
+    const form = document.getElementById('leadForm');
+    const after = document.getElementById('afterSubmit');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = encodeURIComponent(form.fullname.value || '');
+      const email = encodeURIComponent(form.email.value || '');
+      const storeUrl = encodeURIComponent(form.storeurl.value || '');
+      const service = encodeURIComponent(form.service.value || '');
+      const message = encodeURIComponent(form.message.value || 'No additional message');
+      
+      const msg = `Hi 👋 I'm interested in ${data.title}%0A%0A` +
+                  `Name: ${name}%0A` +
+                  `Email: ${email}%0A` +
+                  `Store: ${storeUrl}%0A` +
+                  `Service: ${service}%0A` +
+                  `Message: ${message}`;
+      
+      document.getElementById('waLink').href = `https://wa.me/2349032365125?text=${msg}`;
+      document.getElementById('tgLink').href = `https://t.me/Xcellexert?text=${msg}`;
+
+      form.style.display = 'none';
+      after.style.display = 'block';
+    }, { once: true });
+  }
+
+  // Wire buttons
+  document.querySelectorAll('.open-offer').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.target;
+      openModalFor(key);
+    });
+  });
+
+  // Close handlers
+  document.querySelectorAll('.close').forEach(c => {
+    c.addEventListener('click', closeModal);
+  });
+
+  window.addEventListener('click', e => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // ESC closes
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+      closeModal();
+    }
+  });
+
+  function closeModal() {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    offerDetails.innerHTML = '';
+  }
+</script>
+    
+    
+     <!-- ========================================
+       SERVICES SECTION
+       ======================================== -->
+  <section class="relative bg-gradient-to-b from-gray-900 via-gray-800 to-black py-20 px-6">
+    <div class="max-w-7xl mx-auto text-center">
+      <!-- Heading -->
+      <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
+        🚀 Accelerate Your Store Growth
+      </h2>
+      <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-14">
+        Partner with our <span class="text-green-400 font-semibold">Shopify-certified experts</span> to unlock 
+        traffic, conversions, and long-term scalability. Every service is designed to 
+        <span class="text-green-400 font-semibold">maximize revenue</span> and streamline your operations.
+      </p>
+
+      <!-- Services Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Service Card 1 -->
+        <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
+          <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
+            <i class="fa-solid fa-store text-green-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Store Optimization</h3>
+          <p class="text-gray-400 mb-4">Streamline navigation, enhance speed & UX, and create a frictionless buying journey.</p>
+          <span class="block text-green-400 font-semibold mb-4">Starting at $299</span>
+          <button onclick="openServiceModal('Store Optimization','Starting at $299')" 
+                  class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+            Get Started
+          </button>
+        </div>
+
+        <!-- Service Card 2 -->
+        <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
+          <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
+            <i class="fa-solid fa-magnifying-glass-chart text-green-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Advanced SEO</h3>
+          <p class="text-gray-400 mb-4">Technical audits, keyword strategies & backlinks to boost organic growth.</p>
+          <span class="block text-green-400 font-semibold mb-4">Starting at $399</span>
+          <button onclick="openServiceModal('Advanced SEO','Starting at $399')" 
+                  class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+            Get Started
+          </button>
+        </div>
+
+        <!-- Service Card 3 -->
+        <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
+          <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
+            <i class="fa-solid fa-chart-line text-green-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">CRO & A/B Testing</h3>
+          <p class="text-gray-400 mb-4">Run data-driven experiments that increase conversions and customer retention.</p>
+          <span class="block text-green-400 font-semibold mb-4">Starting at $349</span>
+          <button onclick="openServiceModal('CRO & A/B Testing','Starting at $349')" 
+                  class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+            Get Started
+          </button>
+        </div>
+
+        <!-- Service Card 4 -->
+        <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
+          <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
+            <i class="fa-solid fa-bullhorn text-green-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Growth Marketing</h3>
+          <p class="text-gray-400 mb-4">Leverage automation, loyalty flows & retargeting campaigns that scale sales.</p>
+          <span class="block text-green-400 font-semibold mb-4">Starting at $279</span>
+          <button onclick="openServiceModal('Growth Marketing','Starting at $279')" 
+                  class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+            Get Started
+          </button>
+        </div>
+
+        <!-- Service Card 5 -->
+        <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
+          <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
+            <i class="fa-solid fa-server text-green-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Shopify Plus Migration</h3>
+          <p class="text-gray-400 mb-4">Enterprise-level migration with custom development & scalability features.</p>
+          <span class="block text-green-400 font-semibold mb-4">Starting at $599</span>
+          <button onclick="openServiceModal('Shopify Plus Migration','Starting at $599')" 
+                  class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+            Get Started
+          </button>
+        </div>
+
+        <!-- Service Card 6 -->
+        <div class="group bg-gray-800 border border-gray-700 p-8 rounded-2xl hover:border-green-500 hover:shadow-2xl transition">
+          <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full bg-green-500/10 group-hover:bg-green-500/20 transition">
+            <i class="fa-solid fa-chart-pie text-green-400 text-xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Analytics & Reporting</h3>
+          <p class="text-gray-400 mb-4">Track KPIs with GA4, dashboards & custom insights for smarter decisions.</p>
+          <span class="block text-green-400 font-semibold mb-4">Starting at $199</span>
+          <button onclick="openServiceModal('Analytics & Reporting','Starting at $199')" 
+                  class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+            Get Started
+          </button>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-20">
+        <h3 class="text-2xl font-bold text-white mb-4">
+          Ready to scale your store to the next level?
+        </h3>
+        <p class="text-gray-300 mb-6">Book a free consultation with our Shopify growth specialists today.</p>
+        <a href="javascript:void(0)" onclick="openServiceModal('Free Consultation','No cost')" 
+           class="inline-block px-8 py-4 bg-green-500 text-black font-bold rounded-full hover:bg-green-400 transition">
+          Book Free Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+    
+     <!-- ========================================
+       CASE STUDIES
+       ======================================== -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <h2 class="premium-heading-lg text-center mb-10 text-shadow-medium">Case Studies & Results</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="premium-card rounded-2xl p-6 premium-hover">
+        <img src="https://i.pinimg.com/736x/6c/71/e8/6c71e84df436880b442e6598dc4a999e.jpg" alt="Conversion lift chart" class="w-full h-40 object-cover rounded-xl mb-4 shadow-md" />
+        <div class="text-xl font-bold text-gradient-emerald mb-2 text-shadow-soft">+147% Revenue Increase</div>
+        <p class="premium-text mb-4">Fashion retailer saw dramatic sales boost after checkout optimization and trust badge implementation.</p>
+        <div class="premium-text text-xs text-gray-500 space-y-1">
+          <div>• 3-week implementation</div>
+          <div>• Mobile-first redesign</div> 
+          <div>• A/B tested checkout flow</div>
+        </div>
+      </div>
+
+      <div class="premium-card rounded-2xl p-6 premium-hover">
+        <img src="https://i.pinimg.com/736x/e4/8f/df/e48fdf1b74b2471bf537193df06c01ac.jpg" alt="SEO visibility" class="w-full h-40 object-cover rounded-xl mb-4 shadow-md" />
+        <div class="text-xl font-bold text-gradient-blue mb-2 text-shadow-soft">+280% Organic Traffic</div>
+        <p class="premium-text mb-4">Electronics store gained massive SEO visibility through technical optimization and content strategy.</p>
+        <div class="premium-text text-xs text-gray-500 space-y-1">
+          <div>• 8-week SEO overhaul</div>
+          <div>• Page speed optimization</div>
+          <div>• Schema markup implementation</div>
+        </div>
+      </div>
+
+      <div class="premium-card rounded-2xl p-6 premium-hover">
+        <img src="https://i.pinimg.com/736x/fb/fa/1d/fbfa1dabc7dd0a3ceec42dd23e140a98.jpg" alt="Revenue growth graph" class="w-full h-40 object-cover rounded-xl mb-4 shadow-md" />
+        <div class="text-xl font-bold text-gradient mb-2 text-shadow-soft">$50K → $180K Monthly</div>
+        <p class="premium-text mb-4">Health & wellness brand scaled revenue through conversion-optimized product pages and upsell funnels.</p>
+        <div class="premium-text text-xs text-gray-500 space-y-1">
+          <div>• 12-week transformation</div>
+          <div>• Custom product configurator</div>
+          <div>• Automated email sequences</div>
+        </div>
+      </div>
+    </div>
+  </section>
+    
+    
+    <!-- ========================================
+       TESTIMONIALS
+       ======================================== -->
+  <section class="max-w-6xl mx-auto px-4 mb-12">
+    <h2 class="premium-heading-lg text-center mb-10 text-shadow-medium">What Clients Say</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="premium-card rounded-2xl p-8 premium-hover">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="https://i.pinimg.com/736x/60/14/8c/60148c47284685edb02a8c236a407845.jpg" alt="Client" class="w-16 h-16 rounded-full object-cover shadow-md" />
+          <div>
+            <div class="font-bold text-base text-shadow-soft">Sarah Mitchell</div>
+            <div class="premium-text text-gray-600">Founder, EcoLiving Store</div>
+          </div>
+        </div>
+        <p class="premium-text-lg mb-4 leading-relaxed italic">"Juan completely transformed our Shopify store. Our conversion rate went from <strong class="text-gradient-blue">1.2% to 4.1%</strong> in just 6 weeks. The attention to detail and understanding of sales psychology is incredible."</p>
+        <div class="flex text-yellow-400 text-lg">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+
+      <div class="premium-card rounded-2xl p-8 premium-hover">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" alt="Client" class="w-16 h-16 rounded-full object-cover shadow-md" />
+          <div>
+            <div class="font-bold text-base text-shadow-soft">Marcus Chen</div>
+            <div class="premium-text text-gray-600">CEO, TechGear Pro</div>
+          </div>
+        </div>
+        <p class="premium-text-lg mb-4 leading-relaxed italic">"Working with Juan was a game-changer. He didn't just build us a store - he built us a <strong class="text-gradient-emerald">sales machine</strong>. Revenue doubled in our first quarter after launch. Highly recommended!"</p>
+        <div class="flex text-yellow-400 text-lg">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+     <!-- ========================================
+       FAQ SECTION
+       ======================================== -->
+  <section class="max-w-4xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-center text-gray-900 mb-10">Frequently Asked Questions</h2>
+    
+    <div class="space-y-4">
+      <div class="premium-card p-6 cursor-pointer faq-item">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-gray-900">How quickly can you resolve compliance issues?</h4>
+          <i class="fas fa-chevron-down text-gray-400 faq-icon transition-transform"></i>
+        </div>
+        <div class="faq-content hidden mt-4 text-gray-600 text-sm">
+          Most compliance issues are resolved within 24-48 hours. Priority cases receive immediate attention with same-day responses.
+        </div>
+      </div>
+
+      <div class="premium-card p-6 cursor-pointer faq-item">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-gray-900">What's included in the free audit?</h4>
+          <i class="fas fa-chevron-down text-gray-400 faq-icon transition-transform"></i>
+        </div>
+        <div class="faq-content hidden mt-4 text-gray-600 text-sm">
+          Our free audit covers compliance review, security assessment, SEO analysis, and conversion opportunities. You'll receive a detailed report with prioritized recommendations.
+        </div>
+      </div>
+
+      <div class="premium-card p-6 cursor-pointer faq-item">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-gray-900">Do you guarantee results?</h4>
+          <i class="fas fa-chevron-down text-gray-400 faq-icon transition-transform"></i>
+        </div>
+        <div class="faq-content hidden mt-4 text-gray-600 text-sm">
+          Yes! We offer a 100% money-back guarantee. If we can't deliver measurable improvements to your store, you don't pay. It's that simple.
+        </div>
+      </div>
+
+      <div class="premium-card p-6 cursor-pointer faq-item">
+        <div class="flex justify-between items-center">
+          <h4 class="font-semibold text-gray-900">Are you an official Shopify partner?</h4>
+          <i class="fas fa-chevron-down text-gray-400 faq-icon transition-transform"></i>
+        </div>
+        <div class="faq-content hidden mt-4 text-gray-600 text-sm">
+          We are independent verified partners working with Shopify merchants. We follow all platform guidelines and maintain direct relationships with certified developers.
+        </div>
+      </div>
+    </div>
+  </section>
+    
+    <!-- Pro Fading Images with Captions -->
+    <div class="fade-images">
+      <div class="image-slide active">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid1.webp" alt="Billionaire Boys Club">
+        <div class="caption">Billionaire Boys Club</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid5.webp" alt="Gray Nicolls Cricket">
+        <div class="caption">Gray Nicolls Cricket</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid6.webp" alt="CleanCo">
+        <div class="caption">CleanCo</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid9.webp" alt="RNLI">
+        <div class="caption">RNLI</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid10.webp" alt="Sunnamusk">
+        <div class="caption">Sunnamusk</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid14.webp" alt="Case furniture">
+        <div class="caption">Case Furniture</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid2.webp" alt="Cambridge Satchel">
+        <div class="caption">Cambridge Satchel</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid4.webp" alt="Candy Kittens">
+        <div class="caption">Candy Kittens</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid7.webp" alt="Gilbert Rugby">
+        <div class="caption">Gilbert Rugby</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid8.webp" alt="Unndr">
+        <div class="caption">Unndr</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid13.webp" alt="Bio&Me">
+        <div class="caption">Bio&Me</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid11.webp" alt="Vollebak">
+        <div class="caption">Vollebak</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid3.webp" alt="111Skin">
+        <div class="caption">111Skin</div>
+      </div>
+      <div class="image-slide">
+        <img src="https://www.charleagency.com/assets/images/home/grid/grid12.webp" alt="Muc-Off">
+        <div class="caption">Muc-Off</div>
+      </div>
+    </div>
+  </section>
+    
+     <!-- ========================================
+       FOOTER
+       ======================================== -->
+  <footer class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300 pt-20 pb-12 px-6">
+    <!-- Glow Effect -->
+    <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 via-transparent to-blue-500/10 blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12">
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-xl flex items-center justify-center shadow-xl">
+            <span class="text-white font-bold text-xl">JM</span>
+          </div>
+          <h2 class="premium-heading font-bold text-white text-xl">Juan Manuel</h2>
+        </div>
+        <p class="premium-text text-gray-400 leading-relaxed">
+          Helping Shopify merchants resolve compliance challenges and achieve sustainable growth with tailored strategies.
+        </p>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-white font-bold text-lg mb-6">Services</h3>
+        <ul class="space-y-3 premium-text">
+          <li><a href="#" class="hover:text-white transition-colors">Compliance & Audit</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">SEO Optimization</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Conversion Optimization</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Custom Development</a></li>
+        </ul>
+      </div>
+      
+      <!-- Contact & Social -->
+      <div>
+        <h4 class="text-white font-bold text-lg mb-6">Get In Touch</h4>
+        <div class="space-y-3 text-sm mb-6">
+          <a href="#" onclick="openSupportModal('whatsapp'); return false;" class="flex items-center gap-2 hover:text-white transition">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Support
+          </a>
+          <a href="#" onclick="openSupportModal('telegram'); return false;" class="flex items-center gap-2 hover:text-white transition">
+            <i class="fab fa-telegram"></i>
+            Telegram Chat
+          </a>
+          <a href="#" onclick="openSupportModal('email'); return false;" class="flex items-center gap-2 hover:text-white transition">
+            <i class="fas fa-envelope"></i>
+            Email Us
+          </a>
+        </div>
+
+        <!-- Social Icons -->
+        <h3 class="text-white font-bold text-lg mb-4">Connect</h3>
+        <div class="flex gap-4">
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-green-500 transition-all duration-300 shadow-lg hover:shadow-green-500/25">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-sky-400 transition-all duration-300 shadow-lg hover:shadow-sky-400/25">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-pink-500 transition-all duration-300 shadow-lg hover:shadow-pink-500/25">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="#" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-800 hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-blue-600/25">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="max-w-7xl mx-auto relative z-10 pt-8 mt-12 border-t border-gray-700">
+      <div class="premium-text text-center text-gray-500">
+        © 2025 Juan Manuel. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+    <!-- ========================================
+     AI SUPPORT BOT
+     ======================================== -->
+<div id="aiSupportBot" class="ai-support-bot hidden">
+  <!-- Bot Panel (Initially Hidden) -->
+  <div id="botPanel" class="bot-panel">
+    <!-- Profile Section -->
+    <div class="bot-profile">
+      <img id="waStaffImg" src="https://i.pravatar.cc/80?img=12" alt="Advisor" class="w-12 h-12 rounded-full border-2 border-white">
+      <div class="bot-info">
+        <h4>Live Support Assistant</h4>
+        <p>Online • Ready to help</p>
+      </div>
+    </div>
+    
+    <!-- Support Options -->
+    <div class="support-options">
+      <div class="support-option whatsapp" data-channel="whatsapp">
+        <div class="option-icon whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="option-text">
+          <h5>WhatsApp Chat</h5>
+          <p>Instant messaging support</p>
+        </div>
+      </div>
+      
+      <div class="support-option telegram" data-channel="telegram">
+        <div class="option-icon telegram">
+          <i class="fab fa-telegram"></i>
+        </div>
+        <div class="option-text">
+          <h5>Telegram Support</h5>
+          <p>Secure chat platform</p>
+        </div>
+      </div>
+      
+      <div class="support-option email" data-channel="email">
+        <div class="option-icon email">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="option-text">
+          <h5>Email Support</h5>
+          <p>Detailed case handling</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Bot Button -->
+  <button id="botMainButton" class="bot-main-button">
+    <i class="fa-brands fa-whatsapp text-white text-2xl"></i>
+  </button>
+</div>
+
+<!-- ========================================
+     AI SUPPORT MODAL (Enhanced)
+     ======================================== -->
+<div id="supportModal" class="support-modal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
+          <i id="modalChannelIcon" class="text-white text-sm"></i>
+        </div>
+        <h3 id="modalTitle" class="text-lg font-semibold text-gray-800"></h3>
+      </div> 
+      <button id="modalCloseBtn" class="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center">×</button>
+    </div>
+    
+    <div class="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
+      <p class="text-xs text-blue-800">
+        <strong>Priority Ticket:</strong> <span id="ticketIdDisplay" class="font-mono"></span>
+      </p>
+    </div>
+
+    <form id="supportForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+        <input 
+          id="supportName" 
+          type="text" 
+          required 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="John Doe"
+        />
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Store URL *</label>
+        <input 
+          id="supportStoreUrl" 
+          type="text" 
+          required 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="example.myshopify.com"
+        />
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+        <input 
+          id="supportEmail" 
+          type="email" 
+          required 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="you@example.com"
+        />
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Issue Category</label>
+        <select 
+          id="supportCategory" 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
+        > 
+          <option>Seller Permit</option>
+          <option>Compliance Warning</option>
+          <option>Security / Fraud Alert</option>
+          <option>Checkout / Payment Issue</option>
+          <option>Store Visibility (SEO)</option>
+          <option>Growth & Marketing</option>
+          <option>Technical Support</option>
+          <option>Other</option>
+        </select>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+        <textarea 
+          id="supportMessage" 
+          rows="3" 
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm" 
+          placeholder="Describe your challenge or specific needs..."
+        ></textarea>
+      </div>
+      
+      <div class="flex gap-3 pt-2">
+        <button 
+          type="submit" 
+          class="flex-1 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-2.5 px-4 rounded-lg font-medium transition-all duration-300 text-sm"
+        >
+          Submit & Connect
+        </button>
+        <button 
+          type="button" 
+          id="modalCancelBtn"
+          class="flex-1 border border-gray-300 text-gray-700 py-2.5 px-4 rounded-lg hover:bg-gray-50 transition-colors text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+    
+    <p class="mt-3 text-xs text-gray-500 text-center">
+      Your request will be prioritized and Juan Manuel will respond within minutes.
+    </p>
+  </div>
+</div>
+    
+    <!-- ========================================
+     SERVICE MODAL
+     ======================================== -->
 <div id="serviceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-  <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative mx-4">
     <!-- Close Button -->
-    <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800">✖</button>
+    <button id="serviceModalClose" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">✖</button>
     <!-- Dynamic Title -->
     <h2 id="modalServiceTitle" class="text-xl font-semibold mb-1 text-gray-800"></h2>
     <p id="modalServicePrice" class="text-green-700 font-medium mb-4"></p>
@@ -937,15 +3151,15 @@ h1, h2, h3, h4 {
 
       <div>
         <label class="block text-sm font-medium text-gray-700">Name</label>
-        <input type="text" id="userName" class="w-full border rounded-lg p-2 focus:ring focus:ring-green-200" required>
+        <input type="text" id="serviceName_input" class="w-full border rounded-lg p-2 focus:ring focus:ring-green-200" required>
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" id="userEmail" class="w-full border rounded-lg p-2 focus:ring focus:ring-green-200" required>
+        <input type="email" id="serviceEmail" class="w-full border rounded-lg p-2 focus:ring focus:ring-green-200" required>
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700">Message</label>
-        <textarea id="userMessage" class="w-full border rounded-lg p-2 focus:ring focus:ring-green-200" rows="3"></textarea>
+        <textarea id="serviceMessage" class="w-full border rounded-lg p-2 focus:ring focus:ring-green-200" rows="3"></textarea>
       </div>
       <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
         Submit via WhatsApp
@@ -954,569 +3168,549 @@ h1, h2, h3, h4 {
   </div>
 </div>
 
-<script>
-  // Replace with your WhatsApp number (international format, no + or spaces)
-  const whatsappNumber = "2349135251130"; // Example: "15551234567"
+<!-- ========================================
+     ORIGINAL MODAL (For compatibility)
+     ======================================== -->
+<div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm">
+  <div class="premium-card rounded-2xl shadow-2xl p-6 w-full max-w-md fade-in mx-4">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-semibold">Submit Priority Ticket</h3>
+      <button id="modalClose" class="text-gray-500 hover:text-gray-700 w-6 h-6 flex items-center justify-center">✕</button>
+    </div>
+    
+    <div class="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
+      <p class="text-xs text-blue-800">
+        <strong>Ticket ID:</strong> <span id="ticketIdText" class="font-mono"></span>
+      </p>
+    </div>
 
-  // Open Modal with Service Info
-  function openModal(serviceName, servicePrice) {
+    <div>
+      <label class="text-xs text-gray-600 font-medium">Name *</label>
+      <input id="inputName" class="w-full border border-gray-300 rounded-lg p-3 mb-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="John Doe"/>
+      
+      <label class="text-xs text-gray-600 font-medium">Store URL *</label>
+      <input id="inputStore" class="w-full border border-gray-300 rounded-lg p-3 mb-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="example.myshopify.com"/>
+      
+      <label class="text-xs text-gray-600 font-medium">Email Address *</label>
+      <input id="inputEmail" type="email" class="w-full border border-gray-300 rounded-lg p-3 mb-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="you@example.com"/>
+      
+      <label class="text-xs text-gray-600 font-medium">Issue Category</label>
+      <select id="inputIssue" class="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+        <option>Seller Permit</option>
+        <option>Compliance Warning</option>
+        <option>Security / Fraud Alert</option>
+        <option>Checkout / Payment Issue</option>
+        <option>Store Visibility (SEO)</option>
+        <option>Growth & Marketing</option>
+        <option>Other</option>
+      </select>
+
+      <label class="text-xs text-gray-600 font-medium">Additional Details</label>
+      <textarea id="inputNotes" class="w-full border border-gray-300 rounded-lg p-3 mb-4 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" rows="3" placeholder="Describe your challenge or specific needs..."></textarea>
+
+      <div class="flex gap-3">
+        <button id="sendBtn" class="flex-1 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 rounded-lg font-medium transition-all duration-300">Submit & Connect</button>
+        <button id="cancelBtn" class="flex-1 border border-gray-300 rounded-lg py-3 hover:bg-gray-50 transition-colors">Cancel</button>
+      </div>
+
+      <p class="mt-3 text-xs text-gray-500 text-center">Your ticket will be prioritized and Juan Manuel will respond within minutes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================
+     TOAST NOTIFICATION
+     ======================================== -->
+<div id="toast" class="fixed right-5 bottom-24 z-50 hidden">
+  <div class="bg-gradient-to-r from-emerald-600 to-green-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9 12l2 2 4-4"/>
+    </svg>
+    Priority ticket submitted — opening secure channel...
+  </div>
+</div>
+    
+    
+    <!-- ========================================
+     JAVASCRIPT
+     ======================================== -->
+<script>
+  // ========================================
+  // CONSTANTS & CONFIG
+  // ========================================
+  const FALLBACK_PHOTO = "https://images.unsplash.com/photo-1593032457860-9e1d5bc3c7d4?q=80&w=640&auto=format&fit=crop";
+
+  // ========================================
+  // INITIALIZATION
+  // ========================================
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeLogos();
+    populateDeveloperInfo();
+    setupEventListeners();
+    runLoadingProgress();
+    setupFAQs();
+    initializeAIBot();
+    initializeSlideshow();
+  });
+
+  // ========================================
+  // LOGO SETUP
+  // ========================================
+  function initializeLogos() {
+    const fav = document.getElementById('faviconLink');
+    if (fav) fav.href = CONFIG.logoUrl;
+    
+    const logoTop = document.getElementById('logoTop');
+    if (logoTop) logoTop.src = CONFIG.logoUrl;
+  }
+    
+     // ========================================
+  // DEVELOPER INFO
+  // ========================================
+  function populateDeveloperInfo() {
+    const photoEl = document.getElementById('developerPhoto');
+    if (photoEl) {
+      photoEl.src = CONFIG.developer.photoUrl;
+      photoEl.onerror = () => { photoEl.src = FALLBACK_PHOTO; };
+    }
+
+    const updates = {
+      'developerName': CONFIG.developer.name,
+      'developerTitle': CONFIG.developer.title,
+      'devIdSpan': `Advisor ID: <strong>${CONFIG.developer.staffId}</strong>`,
+      'projectIdSpan': `Case ID: <strong>${CONFIG.developer.caseId}</strong>`,
+      'expSpan': `Experience: ${CONFIG.developer.years}`,
+      'builtSpan': `Stores built: ${CONFIG.developer.storesBuilt}+`,
+      'ratingSpan': `Rating: ${CONFIG.developer.rating}/5 ⭐`,
+      'badgeSpan': CONFIG.developer.partnerBadge,
+      'ticketIdText': CONFIG.ticketId,
+      'ticketIdDisplay': CONFIG.ticketId
+    };
+
+    Object.entries(updates).forEach(([id, content]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        if (typeof content === 'string' && content.includes('<strong>')) {
+          el.innerHTML = content;
+        } else {
+          el.textContent = content;
+        }
+      }
+    });
+  }
+
+  // ========================================
+  // AI BOT INITIALIZATION
+  // ========================================
+  function initializeAIBot() {
+    const aiBot = document.getElementById('aiSupportBot');
+    const botButton = document.getElementById('botMainButton');
+    const botPanel = document.getElementById('botPanel');
+    const supportOptions = document.querySelectorAll('.support-option');
+    
+    if (aiBot && botButton && botPanel) {
+      // Show bot after loading
+      setTimeout(() => {
+        aiBot.classList.remove('hidden');
+      }, 1000);
+
+      // Toggle panel on button click
+      botButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        botPanel.classList.toggle('active');
+      });
+
+      // Handle support option clicks
+      supportOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const channel = option.getAttribute('data-channel');
+          botPanel.classList.remove('active');
+          openSupportModal(channel);
+        });
+      });
+
+      // Close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!aiBot.contains(e.target)) {
+          botPanel.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  // ========================================
+  // SUPPORT MODAL (AI Bot)
+  // ========================================
+  let currentChannel = null;
+
+  function openSupportModal(channel) {
+    currentChannel = channel;
+    const modal = document.getElementById('supportModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalIcon = document.getElementById('modalChannelIcon');
+    
+    if (!modal || !modalTitle || !modalIcon) return;
+
+    // Set channel-specific content
+    const channelConfig = {
+      whatsapp: {
+        title: 'WhatsApp Support',
+        icon: 'fab fa-whatsapp'
+      },
+      telegram: {
+        title: 'Telegram Support',
+        icon: 'fab fa-telegram'
+      },
+      email: {
+        title: 'Email Support',
+        icon: 'fas fa-envelope'
+      }
+    };
+
+    const config = channelConfig[channel] || channelConfig.whatsapp;
+    modalTitle.textContent = config.title;
+    modalIcon.className = `${config.icon} text-white text-sm`;
+
+    modal.classList.add('active');
+    
+    // Focus on first input
+    setTimeout(() => {
+      const nameInput = document.getElementById('supportName');
+      if (nameInput) nameInput.focus();
+    }, 300);
+  }
+
+  function closeSupportModal() {
+    const modal = document.getElementById('supportModal');
+    if (modal) {
+      modal.classList.remove('active');
+    }
+    currentChannel = null;
+  }
+
+  // ========================================
+  // EVENT LISTENERS
+  // ========================================
+  function setupEventListeners() {
+    // Original contact buttons
+    document.querySelectorAll('.contactBtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const channel = btn.getAttribute('data-channel');
+        openModal(channel);
+      });
+    });
+
+    // Support modal handlers
+    const supportForm = document.getElementById('supportForm');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
+
+    if (supportForm) {
+      supportForm.addEventListener('submit', handleSupportSubmit);
+    }
+    
+    if (modalCloseBtn) {
+      modalCloseBtn.addEventListener('click', closeSupportModal);
+    }
+    
+    if (modalCancelBtn) {
+      modalCancelBtn.addEventListener('click', closeSupportModal);
+    }
+
+    // Service modal handlers
+    const serviceForm = document.getElementById('serviceForm');
+    const serviceModalClose = document.getElementById('serviceModalClose');
+
+    if (serviceForm) {
+      serviceForm.addEventListener('submit', handleServiceSubmit);
+    }
+
+    if (serviceModalClose) {
+      serviceModalClose.addEventListener('click', closeServiceModal);
+    }
+
+    // Original modal handlers
+    const modalClose = document.getElementById('modalClose');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const sendBtn = document.getElementById('sendBtn');
+
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    if (sendBtn) sendBtn.addEventListener('click', sendQuote);
+
+    // Close modals on outside click
+    document.getElementById('supportModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'supportModal') {
+        closeSupportModal();
+      }
+    });
+
+    document.getElementById('serviceModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'serviceModal') {
+        closeServiceModal();
+      }
+    });
+  }
+
+  // ========================================
+  // SUPPORT FORM SUBMISSION (AI Bot)
+  // ========================================
+  function handleSupportSubmit(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('supportName')?.value.trim() || '';
+    const storeUrl = document.getElementById('supportStoreUrl')?.value.trim() || '';
+    const emailAddress = document.getElementById('supportEmail')?.value.trim() || '';
+    const issueCategory = document.getElementById('supportCategory')?.value || '';
+    const supportMessage = document.getElementById('supportMessage')?.value.trim() || '';
+
+    if (!name || !storeUrl || !emailAddress) {
+      alert('Please provide Name, Store URL and Email Address before continuing.');
+      return;
+    }
+
+    const ticket = CONFIG.ticketId;
+    const message = `🟢 Priority Support Ticket Created
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ticket ID: ${ticket}
+Channel: ${currentChannel?.toUpperCase()}
+Name: ${name}
+Store: ${storeUrl}
+Email: ${emailAddress}
+Category: ${issueCategory}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Message: ${supportMessage}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Advisor: Juan Manuel (Verified)
+`;
+
+    const encoded = encodeURIComponent(message);
+
+    if (currentChannel === 'whatsapp') {
+      const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encoded}`;
+      window.open(url, '_blank');
+    } else if (currentChannel === 'telegram') {
+      const url = `https://t.me/${CONFIG.telegramUsername}?text=${encoded}`;
+      window.open(url, '_blank');
+    } else if (currentChannel === 'email') {
+      const mailto = `mailto:${CONFIG.supportEmail}?subject=${encodeURIComponent('AI Support Bot - Priority Ticket ' + ticket)}&body=${encoded}`;
+      window.location.href = mailto;
+    }
+
+    closeSupportModal();
+    showToast();
+    resetSupportForm();
+  }
+
+  function resetSupportForm() {
+    const form = document.getElementById('supportForm');
+    if (form) {
+      form.reset();
+    }
+    currentChannel = null;
+  }
+
+  // ========================================
+  // SERVICE MODAL
+  // ========================================
+  function openServiceModal(serviceName, servicePrice) {
     document.getElementById("modalServiceTitle").innerText = serviceName;
     document.getElementById("modalServicePrice").innerText = servicePrice;
     document.getElementById("serviceName").value = serviceName;
     document.getElementById("servicePrice").value = servicePrice;
-    document.getElementById("serviceModal").classList.remove("hidden");
-    document.getElementById("serviceModal").classList.add("flex");
+    const modal = document.getElementById("serviceModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
   }
 
-  // Close Modal
-  function closeModal() {
-    document.getElementById("serviceModal").classList.add("hidden");
-    document.getElementById("serviceModal").classList.remove("flex");
+  function closeServiceModal() {
+    const modal = document.getElementById("serviceModal");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
   }
 
-  // Handle Form Submission
-  document.getElementById("serviceForm").addEventListener("submit", function(e) {
+  function handleServiceSubmit(e) {
     e.preventDefault();
 
     const service = document.getElementById("serviceName").value;
     const price = document.getElementById("servicePrice").value;
-    const name = document.getElementById("userName").value;
-    const email = document.getElementById("userEmail").value;
-    const message = document.getElementById("userMessage").value;
+    const name = document.getElementById("serviceName_input").value;
+    const email = document.getElementById("serviceEmail").value;
+    const message = document.getElementById("serviceMessage").value;
 
     const whatsappMessage = `Hello, I am interested in:\n\n📌 Service: ${service}\n💲 ${price}\n\n👤 Name: ${name}\n📧 Email: ${email}\n\n📝 Message: ${message}`;
     
-    const url = `https://wa.me/2349135251130?text=${encodeURIComponent(whatsappMessage)}`;
+    const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(url, "_blank");
 
-    closeModal();
-  });
-</script>
-
-
-
-  <!-- Pro Fading Images with Captions -->
-  <div class="fade-images">
-    <div class="image-slide active">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid1.webp" alt="Billionaire Boys Club">
-      <div class="caption">Billionaire Boys Club</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid5.webp" alt="Gray Nicolls Cricket">
-      <div class="caption">Gray Nicolls Cricket</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid6.webp" alt="CleanCo">
-      <div class="caption">CleanCo</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid9.webp" alt="RNLI">
-      <div class="caption">RNLI</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid10.webp" alt="Sunnamusk">
-      <div class="caption">Sunnamusk</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid14.webp" alt="Case furniture">
-      <div class="caption">Case Furniture</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid2.webp" alt="Cambridge Satchel">
-      <div class="caption">Cambridge Satchel</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid4.webp" alt="Candy Kittens">
-      <div class="caption">Candy Kittens</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid7.webp" alt="Gilbert Rugby">
-      <div class="caption">Gilbert Rugby</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid8.webp" alt="Unndr">
-      <div class="caption">Unndr</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid13.webp" alt="Bio&Me">
-      <div class="caption">Bio&Me</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid11.webp" alt="Vollebak">
-      <div class="caption">Vollebak</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid3.webp" alt="111Skin">
-      <div class="caption">111Skin</div>
-    </div>
-    <div class="image-slide">
-      <img src="https://www.charleagency.com/assets/images/home/grid/grid12.webp" alt="Muc-Off">
-      <div class="caption">Muc-Off</div>
-    </div>
-  </div>
-</section>
-
-   <!-- Premium Horizontal Merchant Reviews -->
-<section class="relative bg-gray-50 py-16 px-6">
-  <!-- Background Glow -->
-  <div class="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 blur-3xl"></div>
-
-  <div class="max-w-7xl mx-auto relative z-10">
-    <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
-      Merchant Success Stories
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Review 1 -->
-      <div class="bg-white/90 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-gray-200 
-                  hover:shadow-2xl hover:-translate-y-2 transition duration-500 animate-fadeIn">
-        <div class="flex items-center gap-1 mb-4">
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed mb-6">
-          “Juan guided us through a Shopify Plus migration with zero downtime. 
-          Our checkout experience is now faster, and revenue jumped 
-          <span class="font-semibold text-gray-900">40% in one quarter</span>. 
-          His team’s professionalism and assistanceis unmatched.”
-        </p>
-        <div class="flex items-center gap-3">
-          <img src="https://i.pinimg.com/736x/74/51/21/74512116a58837c06d92abc54ed0c0c2.jpg" 
-               alt="Merchant" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow">
-          <div>
-            <h4 class="font-semibold text-gray-900">Daniel Carter</h4>
-            <p class="text-xs text-gray-500">CEO, Trendify Apparel</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 2 -->
-      <div class="bg-white/90 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-gray-200 
-                  hover:shadow-2xl hover:-translate-y-2 transition duration-500 animate-fadeIn delay-200">
-        <div class="flex items-center gap-1 mb-4">
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed mb-6">
-          “Thanks to Juan’s SEO and conversion strategies, our 
-          organic traffic grew by <span class="font-semibold text-gray-900">50%</span> 
-          and customer retention improved. The insights were actionable and results-driven.”
-        </p>
-        <div class="flex items-center gap-3">
-          <img src="https://i.pinimg.com/736x/60/14/8c/60148c47284685edb02a8c236a407845.jpg" 
-               alt="Merchant" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow">
-          <div>
-            <h4 class="font-semibold text-gray-900">Sophia Williams</h4>
-            <p class="text-xs text-gray-500">Founder, GlowWell Skincare</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 3 -->
-      <div class="bg-white/90 backdrop-blur-lg rounded-2xl shadow-lg p-8 border border-gray-200 
-                  hover:shadow-2xl hover:-translate-y-2 transition duration-500 animate-fadeIn delay-400">
-        <div class="flex items-center gap-1 mb-4">
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-          <i class="fa-solid fa-star text-yellow-400"></i>
-        </div>
-        <p class="text-gray-700 text-sm leading-relaxed mb-6">
-          “We struggled with compliance issues until Juan stepped in. 
-          Within weeks, our store was fully compliant, and we scaled ads 
-          safely - leading to a <span class="font-semibold text-gray-900">30% increase</span> 
-          in conversions. Truly a lifesaver.”
-        </p>
-        <div class="flex items-center gap-3">
-          <img src="https://i.pinimg.com/736x/82/a9/fc/82a9fcf87248a1dfda617fcbac7d2c48.jpg" 
-               alt="Merchant" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow">
-          <div>
-            <h4 class="font-semibold text-gray-900">Olivia Brown</h4>
-            <p class="text-xs text-gray-500">Co-founder, LuxeHome Decor</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-   <!-- Premium Wix-Style Footer (No Newsletter) -->
-<footer class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300 pt-16 pb-10 px-6">
-  <!-- Glow Effect -->
-  <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 via-transparent to-blue-500/10 blur-3xl"></div>
-
-  <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-10">
-    <!-- Brand -->
-    <div>
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg flex items-center justify-center shadow-lg">
-          <span class="text-white font-bold text-lg">JM</span>
-        </div>
-        <h2 class="text-xl font-bold text-white">Juan Manuel</h2>
-      </div>
-      <p class="text-gray-400 text-sm leading-relaxed">
-        Helping Shopify merchants resolve compliance challenges and achieve sustainable growth with tailored strategies.
-      </p>
-    </div>
-
-    <!-- Services -->
-    <div>
-      <h3 class="text-white font-semibold text-lg mb-4">Services</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-white transition">Compliance & Audit</a></li>
-        <li><a href="#" class="hover:text-white transition">SEO Optimization</a></li>
-        <li><a href="#" class="hover:text-white transition">Conversion Optimization</a></li>
-        <li><a href="#" class="hover:text-white transition">Custom Development</a></li>
-      </ul>
-    </div>
-
-    <!-- Company -->
-    <div>
-      <h3 class="text-white font-semibold text-lg mb-4">Company</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-white transition">About Us</a></li>
-        <li><a href="#" class="hover:text-white transition">Careers</a></li>
-        <li><a href="#" class="hover:text-white transition">Contact</a></li>
-        <li><a href="#" class="hover:text-white transition">Blog</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Divider -->
-  <div class="border-t border-gray-700 mt-10 pt-6 relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
-    <!-- Social Icons -->
-    <div class="flex gap-4">
-      <a href="#" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-green-500 transition">
-        <i class="fa-brands fa-facebook-f"></i>
-      </a>
-      <a href="#" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-sky-400 transition">
-        <i class="fa-brands fa-twitter"></i>
-      </a>
-      <a href="#" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-pink-500 transition">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
-      <a href="#" class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-600 transition">
-        <i class="fa-brands fa-linkedin-in"></i>
-      </a>
-    </div>
-
-    <!-- Legal -->
-    <div class="text-xs text-gray-500 text-center md:text-right">
-      © 2025 Juan Manuel. All rights reserved. | 
-      <a href="#" class="hover:text-gray-300">Terms</a> · 
-      <a href="#" class="hover:text-gray-300">Privacy</a>
-    </div>
-  </div>
-</footer>
-
-
-<style>
-/* Layout wrapper */
-.ticker-section {
-  max-width: 1200px;
-  margin: 40px auto;
-  text-align: center;
-  font-family: "Inter", Arial, sans-serif;
-}
-
-/* Premium ticker bar */
-.ticker-wrapper {
-  overflow: hidden;
-  background: linear-gradient(90deg, #111, #333);
-  color: #fff;
-  white-space: nowrap;
-  border-radius: 40px;
-  padding: 14px 0;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.ticker {
-  display: inline-block;
-  padding-left: 100%;
-  animation: ticker 25s linear infinite;
-  font-size: 1.1rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-/* Pro fading slideshow */
-.fade-images {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  height: 500px;
-  margin: 0 auto;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-}
-
-.image-slide {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  opacity: 0;
-  transition: opacity 1.8s ease-in-out, transform 6s ease;
-}
-
-.image-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.1);
-}
-
-.image-slide.active {
-  opacity: 1;
-  z-index: 2;
-}
-
-.image-slide.active img {
-  transform: scale(1);
-}
-
-/* Captions */
-.caption {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 3px 10px rgba(0,0,0,0.6);
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
-  z-index: 4;
-}
-
-.image-slide.active .caption {
-  opacity: 1;
-}
-
-/* Gradient overlay */
-.fade-images::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
-  z-index: 3;
-  pointer-events: none;
-  border-radius: 20px;
-}
-</style>
-
-<script>
-let index = 0;
-const slides = document.querySelectorAll(".image-slide");
-
-function showNextImage() {
-  slides[index].classList.remove("active");
-  index = (index + 1) % slides.length;
-  slides[index].classList.add("active");
-}
-
-setInterval(showNextImage, 5000); // 5s per slide
-</script>
- <!-- END grid -->
-</main>
-
-<!-- Modal Contact Form -->
-<div id="modal" class="fixed inset-0 hidden items-center justify-center z-50 px-3 sm:px-4">
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-
-  <!-- Modal Box -->
-  <div class="relative w-full max-w-sm sm:max-w-lg md:max-w-2xl bg-white rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden">
-    
-    <!-- Scrollable Content -->
-    <div class="overflow-y-auto p-4 sm:p-6 md:p-8">
-      <!-- Header -->
-      <div class="flex items-start justify-between mb-6">
-        <div>
-          <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">Contact Advisor</h3>
-          <div class="text-xs sm:text-sm text-gray-600 mt-1">
-            Ticket <span id="ticketRef" class="font-bold text-gray-900">#MD57-097</span>
-          </div>
-        </div>
-        <button aria-label="Close" id="modalCloseBtn" class="text-gray-500 hover:text-gray-800 p-2 rounded-lg hover:bg-gray-100 transition-colors">
-          <i class="fa-solid fa-xmark text-lg md:text-xl"></i>
-        </button>
-      </div>
-
-      <!-- Form -->
-      <form id="contactForm" onsubmit="handleSubmit(event)" class="space-y-5">
-        <input type="hidden" id="methodField" />
-
-        <!-- Grid Fields -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Ticket ID</label>
-            <input id="ticketInput" type="text" value="#MD57-097" readonly class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Store URL</label>
-            <input id="storeInput" type="text" placeholder="yourstore.myshopify.com" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Email address</label>
-            <input id="emailInput" type="email" required placeholder="you@example.com" class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Issue type</label>
-            <select id="issueInput" required class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-              <option value="">Select an issue</option>
-              <option>Compliance Warning</option>
-              <option>Checkout or Payment Issues</option>
-              <option>Store Visibility / SEO</option>
-              <option>Salers permit</option>
-              <option>Low sales</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Name -->
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-1">Your name</label>
-          <input id="nameInput" type="text" required class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
-        </div>
-
-        <!-- Message -->
-        <div class="pb-20"> <!-- padding bottom so content doesn't clash with sticky footer -->
-          <label class="block text-sm font-semibold text-gray-700 mb-1">Message</label>
-          <textarea id="messageInput" rows="4" required placeholder="Summary of the issue..." class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
-        </div>
-      </form>
-    </div>
-
-    <!-- Sticky Footer -->
-    <div class="sticky bottom-0 bg-white border-t border-gray-200 flex items-center justify-end gap-3 px-4 sm:px-6 py-3 shadow-sm">
-      <button type="button" id="cancelBtn" class="px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg border border-gray-300 font-medium text-sm hover:bg-gray-50 transition-colors">
-        Cancel
-      </button>
-      <button id="submitBtn" type="submit" form="contactForm" class="px-6 py-2 sm:px-8 sm:py-2.5 rounded-lg bg-indigo-600 text-white font-semibold text-sm shadow hover:bg-indigo-700 transition-colors inline-flex items-center gap-2">
-        <span class="label">Submit</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Floating WhatsApp/Telegram/Email Widget -->
-<div id="whatsappPopup" class="fixed bottom-20 right-6 w-80 hidden z-50">
-  <div class="widget-shopify animate-fade-in">
-    <div class="widget-header-shopify text-white flex items-center gap-4">
-      <img id="waStaffImg" src="https://i.pravatar.cc/80?img=12" alt="Advisor" class="w-12 h-12 rounded-full border-2 border-white">
-      <div class="flex-1">
-        <div class="font-bold text-lg">Juan Manuel</div>
-        <div class="text-sm opacity-90">Shopify Compliance & Growth Specialist</div>
-      </div>
-      <button id="waCloseBtn" class="text-white/90 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-    <div class="p-6 text-sm text-gray-700 leading-relaxed">
-      👋 Hi — I help you with compliance, payments, SEO, marketing & sales. Start a chat and I'll guide you through.
-    </div>
-    <div class="px-6 pb-6 space-y-3">
-      <a href="https://wa.me/2349135251130" target="_blank" class="w-full block btn-shopify text-white py-3 rounded-lg text-center font-semibold">
-        <i class="fa-brands fa-whatsapp mr-2"></i> Start Chat
-      </a>
-      <a href="https://t.me/JuanShopifyadvisor" target="_blank" class="w-full block btn-wix text-white py-3 rounded-lg text-center font-semibold">
-        <i class="fa-brands fa-telegram mr-2"></i> Message (Telegram)
-      </a>
-      <a href="mailto:juan.shopifyagent@gmail.com" class="w-full block bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-lg text-center font-semibold transition-colors">
-        <i class="fa-solid fa-envelope mr-2"></i> Send Email
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- Trigger Button -->
-<button id="waTriggerBtn" class="fab-shopify fixed bottom-6 right-6 z-50 text-white">
-  <i class="fa-brands fa-whatsapp text-2xl"></i>
-</button>
-
-<script>
-// Loading animation
-const loading = document.getElementById('loading');
-const dashboard = document.getElementById('dashboard');
-const pct = document.getElementById('pct');
-let value = 0;
-const t = setInterval(()=>{
-  value = Math.min(100,value + Math.floor(Math.random()*7)+3);
-  pct.textContent = value + '%';
-  if(value>=100){
-    clearInterval(t);
-    loading.classList.add('hidden');
-    dashboard.classList.remove('hidden');
+    closeServiceModal();
+    showToast();
   }
-},110);
 
-// Modal & widgets
-const modal = document.getElementById('modal');
-const contactForm = document.getElementById('contactForm');
-const methodField = document.getElementById('methodField');
-const waPopup = document.getElementById('whatsappPopup');
+  // ========================================
+  // FAQ SETUP
+  // ========================================
+  function setupFAQs() {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const content = item.querySelector('.faq-content');
+        const icon = item.querySelector('.faq-icon');
+        
+        if (content && icon) {
+          document.querySelectorAll('.faq-content').forEach(otherContent => {
+            if (otherContent !== content) {
+              otherContent.classList.add('hidden');
+              const otherIcon = otherContent.parentElement.querySelector('.faq-icon');
+              if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+            }
+          });
+          
+          content.classList.toggle('hidden');
+          icon.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+      });
+    });
+  }
 
-document.getElementById('waTriggerBtn').addEventListener('click', ()=> waPopup.classList.toggle('hidden'));
-document.getElementById('waCloseBtn').addEventListener('click', ()=> waPopup.classList.add('hidden'));
-document.getElementById('waOpenBtn').addEventListener('click', ()=> openForm('whatsapp'));
-document.getElementById('cancelBtn').addEventListener('click', ()=> closeForm());
-document.getElementById('modalCloseBtn').addEventListener('click', ()=> closeForm());
+  // ========================================
+  // LOADING PROGRESS
+  // ========================================
+ function runLoadingProgress() {
+    const pct = document.getElementById('pct');
+    let value = 0;
+    
+    const loadingInterval = setInterval(() => {
+      value = Math.min(100, value + Math.floor(Math.random() * 7) + 3);
+      if (pct) pct.textContent = value + '%';
+      
+      if (value >= 100) {
+        clearInterval(loadingInterval);
+        
+        setTimeout(() => {
+          const loading = document.getElementById('loading');
+          const main = document.getElementById('main');
+          const onlineStatus = document.getElementById('onlineStatus');
+          
+          if (loading) loading.style.display = 'none';
+          if (main) main.classList.remove('hidden');
+          if (onlineStatus) onlineStatus.classList.remove('hidden');
+        }, 500);
+      }
+    }, 110);
+  }
 
-function openForm(method){
-  methodField.value = method;
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
-function closeForm(){
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
-  contactForm.reset();
-}
+  // ========================================
+  // ORIGINAL MODAL (For compatibility)
+  // ========================================
+  let activeChannel = null;
 
-// Submission
-function handleSubmit(e){
-  e.preventDefault();
-  const method = methodField.value;
-  const ticket = document.getElementById('ticketInput').value;
-  const store = document.getElementById('storeInput').value;
-  const email = document.getElementById('emailInput').value;
-  const issue = document.getElementById('issueInput').value;
-  const name = document.getElementById('nameInput').value;
-  const message = document.getElementById('messageInput').value;
-  let url='';
-  const body = encodeURIComponent(
-    'Ticket: ' + ticket + '\n' +
-    'Name: ' + name + '\n' +
-    'Email: ' + email + '\n' +
-    'Store: ' + store + '\n' +
-    'Issue: ' + issue + '\n' +
-    'Message: ' + message
-  );
+  function openModal(channel) {
+    activeChannel = channel;
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      
+      setTimeout(() => {
+        const input = document.getElementById('inputName');
+        if (input) input.focus();
+      }, 200);
+    }
+  }
 
-  if(method==='whatsapp') url='https://wa.me/2349135251130?text=' + body;
-  else if(method==='telegram') url='https://t.me/JuanShopifyadvisor'; // <- TELEGRAM LINK
-  else if(method==='email') url='mailto:juan.shopifyagent@gmail.com?subject=Support Request&body=' + body;
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    activeChannel = null;
+  }
 
-  window.open(url,'_blank');
-}
+  function sendQuote() {
+    const name = document.getElementById('inputName')?.value.trim() || '';
+    const store = document.getElementById('inputStore')?.value.trim() || '';
+    const email = document.getElementById('inputEmail')?.value.trim() || '';
+    const issue = document.getElementById('inputIssue')?.value || '';
+    const notes = document.getElementById('inputNotes')?.value.trim() || '';
+
+    if (!name || !store || !email) {
+      alert('Please provide Name, Store URL/Business Name and Email before continuing.');
+      return;
+    }
+
+    const ticket = CONFIG.ticketId;
+    const message = `🟢 Priority Support Ticket Created
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Ticket ID: ${ticket}
+Name: ${name}
+Store: ${store}
+Email: ${email}
+Issue: ${issue}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Notes: ${notes}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Advisor: Juan Manuel (Verified)
+Status: PRIORITY CASE - Immediate Response`;
+    const encoded = encodeURIComponent(message);
+
+    if (activeChannel === 'whatsapp') {
+      const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encoded}`;
+      window.open(url, '_blank');
+    } else if (activeChannel === 'telegram') {
+      const url = `https://t.me/${CONFIG.telegramUsername}?text=${encoded}`;
+      window.open(url, '_blank');
+    } else if (activeChannel === 'email') {
+      const mailto = `mailto:${CONFIG.supportEmail}?subject=${encodeURIComponent('Priority Support Ticket ' + ticket)}&body=${encoded}`;
+      window.location.href = mailto;
+    }
+
+    closeModal();
+    showToast();
+    resetForm();
+  }
+
+  // ========================================
+  // UTILITY FUNCTIONS
+  // ========================================
+  function showToast() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 5000);
+    }
+  }
+
+  function resetForm() {
+    const inputs = ['inputName', 'inputStore', 'inputEmail', 'inputNotes'];
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    
+    const select = document.getElementById('inputIssue');
+    if (select) select.selectedIndex = 0;
+    
+    activeChannel = null;
+  }
+
+  // ========================================
+  // SLIDESHOW
+  // ========================================
+  function initializeSlideshow() {
+    let index = 0;
+    const slides = document.querySelectorAll(".image-slide");
+
+    function showNextImage() {
+      slides[index].classList.remove("active");
+      index = (index + 1) % slides.length;
+      slides[index].classList.add("active");
+    }
+
+    setInterval(showNextImage, 5000); // 5s per slide
+  }
 </script>
-
 </body>
 </html>
